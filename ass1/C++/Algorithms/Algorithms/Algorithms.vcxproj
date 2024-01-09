@@ -155,6 +155,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Algorithms.cpp" />
+    <ClCompile Include="B-Trees\BTree_3-2.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="B-Trees\BTree_3-2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
