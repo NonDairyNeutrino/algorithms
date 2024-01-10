@@ -52,7 +52,7 @@ A skip list can be thought of as a layered linked list. The bottom layer is deno
     \centering
     \includegraphics[width=\textwidth,keepaspectratio]{Images/SkipList_MIT.PNG}
     \label{fig:my_label}
-    \caption{Skip list}
+    \caption{An example of a skip list from the MIT lecture slides}
 \end{figure}
 
 The hierarchical structure of the layers results in an average time complexity of $O(\text{log} n)$ for search, insert, and delete operations and a worst case of $O(n)$. This structure uses randomness and a layered linked list to skip over portions of the data when performing search operations, to a very similar effect as a binary search tree. The linked list structure is more beneficial than a binary search tree, however, because there is no need to rebalance the tree after every insertion or deletion with a skip list.
