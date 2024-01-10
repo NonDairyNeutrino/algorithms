@@ -1,5 +1,51 @@
 \documentclass{article}
+\usepackage[margin=0.625in]{geometry}
+\usepackage{parskip, setspace}
+\setstretch{1.15}
+\usepackage{amsmath, amsfonts}
+%\numberwithin{equation}{subsection}
+\usepackage{graphicx, caption}
+\usepackage{hyperref}
+\usepackage{algorithm2e}
+
+\title{CS 529: Advanced Data Structures \& Algorithms \\ Assignment 1}
+\author{Nathan Chapman, Hunter L., Andrew Struthers}
+\date{\today}
 
 \begin{document}
-This is a test
+\maketitle
+
+\section*{Algorithm for creating a 3-2 B-Tree}
+
+    Insertion: If node has 3 keys, bump up the middle one and restructure the rest to be children of a binary tree.
+
+    Test alogrithm
+    % for more information on the algorithm environment and algorithm2e package, see here: https://www.overleaf.com/learn/latex/Algorithms#The_algorithm2e_package
+    \begin{algorithm}
+        $i\gets 10$\;
+        \eIf{$i\geq 5$}
+        {
+            $i\gets i-1$\;
+        }{
+            \If{$i\leq 3$}
+            {
+                $i\gets i+2$\;
+            }
+        }
+    \end{algorithm}
+
+\pagebreak
+
+\section*{Discussion on van Emde Boas Trees}
+
+    Parking lots
+
+\pagebreak
+
+\section*{Discussion on Skip Lists}
+
+    Skip lists are great because they're really fast to search.  This is because the intrinsic search algorithm skips over a lot of the elements.
+
+\pagebreak
+
 \end{document}
