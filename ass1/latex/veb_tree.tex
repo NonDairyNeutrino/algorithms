@@ -44,7 +44,24 @@
 
 \section*{Discussion on Skip Lists}
 
-    Skip lists are great because they're really fast to search.  This is because the intrinsic search algorithm skips over a lot of the elements.
+Skip lists are an extension on the standard linked list. This data structure preserves the space efficiency and insertion/deletion ease of a linked list, where each node in the list has a pointer to the next (and sometimes previous) node, while also benefiting from the searching speed of various tree structures. This data structure is a randomized data structure, and it allows an average complexity of $O(\text{log} n)$ for insertion and searching. This means that on average, a skip list has the best features of a sorted array, capable of random memory access while searching, while maintaining the linked list structure, meaning that insertion requires very low time complexity. 
+
+A skip list can be thought of as a layered linked list. The bottom layer is denoted as $L(0)$, and then higher layers are denoted as $L(1)$, $L(2)$, \ldots, $L(n)$. An element of the skip list has a $\frac{1}{2^m}$\% chance of being on layer m. If an element appears on layer m, the element also must appear on layer $m-1$, $m-2$, \ldots, $0$. An image of a skip list can be seen below
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{Images/SkipList_MIT.PNG}
+    \label{fig:my_label}
+    \caption{Skip list}
+\end{figure}
+
+The hierarchical structure of the layers results in an average time complexity of $O(\text{log} n)$ for search, insert, and delete operations and a worst case of $O(n)$. This structure uses randomness and a layered linked list to skip over portions of the data when performing search operations, to a very similar effect as a binary search tree. The linked list structure is more beneficial than a binary search tree, however, because there is no need to rebalance the tree after every insertion or deletion with a skip list.
+
+A common real-world representation of a skip list is buses in a busy city. In downtown Seattle, for example, there are many bus stops. Some buses go from stop to stop, whereas some buses stop at one high traffic stop, then cross town, skipping many lower traffic stops in the process. This is the same idea as a skip list, where the bottom row is analogous to the bus that stops at every destination, and the higher up rows in the skip list hierarchy are analogous to the buses that take people from one high traffic destination to another, skipping over some stops. 
+
+Skip lists have many applications, especially in high traffic operations where rebalancing a tree or linearly searching through a massive array would take too long. One of the common applications of skip lists in industry is using this data structure as a way to index databases and database tables. Another application of skip lists is in priority queues, where one specific example could be CPU job scheduling. CPU job scheduling is a very time-sensitive process, where jobs could be swapped out many times per second. Maintaining a priority queue with a skip list, where each node in the list is a priority of a job, allows the priority queue to operate in logarithmic time, where insertion and deletion is much faster than a standard queue implementation, and a tree structure doesn’t need to be constantly maintained and rebalanced as jobs get added to or removed from the system.
+
+
 
 \pagebreak
 
