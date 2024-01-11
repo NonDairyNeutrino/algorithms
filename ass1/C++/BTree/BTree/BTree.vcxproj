@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{6943F8F4-9EFB-4B75-AAB8-9965F446BD6D}</ProjectGuid>
+    <ProjectGuid>{004650E9-BD8F-467B-A0D6-5B74A6705979}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Algorithms</RootNamespace>
+    <RootNamespace>BTree</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -154,11 +154,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Algorithms.cpp" />
-    <ClCompile Include="B-Trees\BTree_3-2.cpp" />
+    <ClCompile Include="BTree.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="B-Trees\BTree_3-2.h" />
+    <ClInclude Include="BTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
