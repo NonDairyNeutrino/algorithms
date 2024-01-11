@@ -80,13 +80,26 @@
 
 \section*{Discussion on van Emde Boas Trees}
 
-    Parking lots
+van Emde Boas (vEB) trees store a fixed number of n bits in an index-addressable structure, the length of which must be an order of $2m$. Each bit position represents the presence of that value in that structure. From this list, it constructs a summary vector tree storing binary values identifying the presence of a positive bit within its vector. An example of a vEB tree of order $16$ can be seen below.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5,keepaspectratio]{Images/vebtree.jpg}
+    \label{fig:my_label}
+    \caption{Van Emde Boas Trees (``proto van Emde Boas Trees". geeksforgeeks.org)}
+\end{figure}
+
+Unlike other structures, the index addressable structure it is built on allows for insertion, deletion, and searching in constant $O(1)$ time simply by changing the bit at the index representing the value in the tree and updating the summary vector. The major strength of vEB trees is in its ability to find the next nearest value from any given value in $O(\text{log}\text{log} M)$ time ($M$ being the total number of possible integers in $2m$).
+
+An example use case for vEB trees may be in the location of the nearest empty parking space. Assuming that the car is near a parking space, that the spaces are ordered by distance from one another (i.e. space \#3 is closer to space \#5 than space \#10), and that a $1$ represents an empty parking space. After locating the current spot in constant time (which we will assume to be full), the ability of vEB trees to find a successor (or predecessor) of an empty spot in $O(\text{log}\text{log} M)$ might prove useful.
+
+Unfortunately, the limitations of vEB trees make other algorithms (such as Skip Lists) much more preferable for solving successor and predecessor problems. While the constant time insertion and deletion are ideal, the limitation that they may only represent integers values is a major limitation. The fixed size also restricts what the structure can represent. And finally, the fixed space requirement of $O(M)$ makes the structure cumbersome. These drawbacks, combined with the fact that structures like Skip Lists can perform next nearest neighbor functions on more versatile objects in $O(\text{log} n)$ time, makes them more useful over vEB trees.
 
 \pagebreak
 
 \section*{Discussion on Skip Lists}
 
-Skip lists are an extension on the standard linked list. This data structure preserves the space efficiency and insertion/deletion ease of a linked list, where each node in the list has a pointer to the next (and sometimes previous) node, while also benefiting from the searching speed of various tree structures. This data structure is a randomized data structure, and it allows an average complexity of $O(\text{log} n)$ for insertion and searching. This means that on average, a skip list has the best features of a sorted array, capable of random memory access while searching, while maintaining the linked list structure, meaning that insertion requires very low time complexity. 
+Skip lists are an extension on the standard linked list. This data structure on average preserves the space efficiency of a linked list, but due to the random nature of this structure, could have worst case $O(n \text{log} n)$ space efficiency. Skip lists also have the insertion/deletion ease of a linked list, where each node in the list has a pointer to the next (and sometimes previous) node, while also benefiting from the searching speed of various tree structures. This data structure is a randomized data structure, and it allows an average complexity of $O(\text{log} n)$ for insertion and searching. This means that on average, a skip list has the best features of a sorted array, capable of random memory access while searching, while maintaining the linked list structure, meaning that insertion requires very low time complexity. 
 
 A skip list can be thought of as a layered linked list. The bottom layer is denoted as $L(0)$, and then higher layers are denoted as $L(1)$, $L(2)$, \ldots, $L(n)$. An element of the skip list has a $\frac{1}{2^m}$\% chance of being on layer m. If an element appears on layer m, the element also must appear on layer $m-1$, $m-2$, \ldots, $0$. An image of a skip list can be seen below
 
