@@ -7,6 +7,7 @@
 \usepackage{graphicx, caption}
 \usepackage{hyperref}
 \usepackage[ruled, linesnumbered, noend]{algorithm2e}
+\usepackage[english]{babel}
 
 \title{CS 529: Advanced Data Structures \& Algorithms \\ Assignment 1}
 \author{Nathan Chapman, Hunter L., Andrew Struthers}
@@ -81,6 +82,81 @@
         \end{function}
 
     \subsection*{Iterative}
+
+We also wrote an interative version of the 3-2 Tree construction, seen below. For each key in the keys list, we call function \texttt{insertKey} with a reference to the head node of the tree and the key we want to insert. The algorithm then traverse iteratively down the tree from the head, finding the leaf where the key should be inserted. Once that leaf is found, insert the key into that leaf's keys, preserving the sorted order of the keys. Then, the algorithm handles the possible case where there are 3 keys in a node, by breaking up the current node into a left and right node, whose children and keys are assigned from the current node. The middle key gets inserted into the current node's parent, and then sets the current to the current node's parent. This process is repeated until the current node no longer has 3 keys. The tree grows at the root level, so all leaves are preserved at the bottom of the tree.
+
+\texttt{traverseTree} runs in $O(\text{log}n)$ time, because the algorithm traverses depth first into a tree structure. The traversal skips all invalid nodes by only moving to the appropriate child. \texttt{handleKeyOverflow} also runs in $O(\text{log}n)$ time, since it traverses the tree from a single leaf up to the root node, which takes the same runtime as traversing from the root node to a single leaf. \texttt{breakNode} runs in constant time. Therefore, the insertion of a key into the 3-2 tree structure using an iterative algorithm is $O(\text{log}n)$ time, which matches the expected insertion operation time.
+
+\begin{function}
+	\caption{insertKey(head, key)}
+	\DontPrintSemicolon
+	\KwIn{Head node of tree $head$, key to be inserted $key$}
+	$current$ $\gets$ \texttt{traverseHead}($head$, $key$)\;
+	insert key into $current$ keys\;
+	\texttt{handleKeyOverflow}(current)\;
+\end{function}
+
+\begin{function}
+	\caption{traverseTree(head, key)}
+	\DontPrintSemicolon
+	\KwIn{Head node of the tree $head$, key to be inserted $key$}
+	\KwOut{Leaf node where $key$ should be inserted}
+	$current$ $\gets$ $head$\;
+	\While{current node is not a leaf}
+	{
+		\If{key $\leq$ current first key}
+		{
+			$current$ $\gets$ $current$ left child\;
+		}
+		\ElseIf{key $\geq$ current first key}
+		{
+			$current$ $\gets$ $current$ right child\;
+		}
+		\Else
+		{
+			$current$ $\gets$ $current$ middle child\;
+		}
+	}
+\end{function}
+
+\begin{function}
+	\caption{handleKeyOverflow(current)}
+	\DontPrintSemicolon
+	\KwIn{Current node in the tree $current$}
+	\While{number of keys in $current$ $=$ 3}
+	{
+		$middle\_key$ $\gets$ middle key of node\;
+		\If{$current$ parent node is null}
+		{
+			create new parent node\;
+			$current.parent$ $\gets$ to new node\;
+		}
+		insert $middle\_key$ to parent node\;
+		create new $left\_node$ and $right\_node$\;
+		\texttt{breakNode}($current$, $left\_node$, $right\_node$)\;
+		delete $middle\_key$ from $current$ keys\;
+		$left.parent$ $\gets$ $current.parent$\;
+		$right.parent$ $\gets$ $current.parent$\;
+		$current$ $\gets$ $current.parent$\;
+		delete old $current$\;
+	}
+\end{function}
+
+\begin{function}
+	\caption{breakNode($current$, out $left$, out $right$)}
+	\DontPrintSemicolon
+	\KwIn{Current node in tree $current$, new left node $left$, new right node $right$}
+	\KwOut{Constructed $left$ and $right$ nodes as out parameters}
+	$left$ $\gets$ parent to $current$ parent\;
+	$right$ $\gets$ parent to $current$ parent\;
+	insert first key from $current$ to $left$\;
+	insert last key from $current$ to $right$\;
+	\If{$current$ is not a leaf}
+	{
+		insert two left children from $current$ as $left$ children\;
+		insert two right children from $current$ as $right$ children\;
+	}
+\end{function}
 
 \pagebreak
 
