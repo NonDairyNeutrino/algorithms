@@ -9,8 +9,8 @@
 \usepackage[ruled, linesnumbered, noend]{algorithm2e}
 \usepackage[english]{babel}
 
-\title{CS 529: Advanced Data Structures \& Algorithms \\ Assignment 1}
-\author{Nathan Chapman, Hunter L., Andrew Struthers}
+\title{\vspace{-0.625in}CS 529: Advanced Data Structures \& Algorithms \\ Assignment 1}
+\author{Nathan Chapman, Hunter Lawrence, Andrew Struthers}
 \date{\today}
 
 \begin{document}
@@ -18,11 +18,13 @@
 
 \section*{Creating a 3-2 Tree}
 
-    A binary search tree (BST) is usually an excellent choice of data structure because inserting, deleting, and searching all take $O(n)$.  This linear complexity arises because the tree can be ``completely'' unbalanced, yielding a linear search.  B-Trees circumvent this by re-balancing upon each insertion and deletion.
+    A binary search tree (BST) is usually an excellent choice of data structure because inserting, deleting, and searching all take $O(n)$.  This linear complexity arises because the tree can be ``completely'' unbalanced, yielding a linear search.  B-Trees circumvent this by rebalancing upon each insertion and deletion.
 
     An example of how the re-balancing is implemented for B-Trees can be shown in the context of the simplest B-Tree: the 3-2 tree.  The following algorithms implement insertion, traversal and ``bumping and breaking'' of the nodes of a 3-2 tree.
 
     \subsection*{Recursive}
+
+        The core functionality of what differentiates a B-tree from a BST (i.e. the automatic rebalancing) is encapsulated in \texttt{bumpAndBreak}.
 
         \begin{function}
             \caption{bumpAndBreak(p)}
@@ -41,6 +43,8 @@
             create $parent.right$ with key $max \ p.keys$\;
             remove $parent.middle$\;
         \end{function}
+
+        We can use \texttt{bumpAndBreak} upon recursively traversing down to a leaf that, after insertion of the a new key, has 3 keys.
 
         \begin{function}
             \caption{insertRecursive(p, k)}
@@ -66,6 +70,10 @@
                 \insertRecursive(p.middle, k)\;
             }
         \end{function}
+    
+\pagebreak
+
+        Finally, we can exectute the above algorithms for each element in a list of keys to create a 3-2 B-Tree.
 
         \begin{function}
             \caption{buildTree(keyList)}
@@ -162,20 +170,20 @@ We also wrote an interative version of the 3-2 Tree construction, seen below. Fo
 
 \section*{Discussion on van Emde Boas Trees}
 
-van Emde Boas (vEB) trees store a fixed number of n bits in an index-addressable structure, the length of which must be an order of $2m$. Each bit position represents the presence of that value in that structure. From this list, it constructs a summary vector tree storing binary values identifying the presence of a positive bit within its vector. An example of a vEB tree of order $16$ can be seen below.
+Van Emde Boas (vEB) Trees are a data structure which stores a fixed number of ${M = 2^m}$ binary vectors in an index addressable array. Each index in this array represents the presence (1) or absence (0) of that element in the structure. From this list, it creates and stores a summary vector tree containing binary values identifying the presence of a positive bit within its vector. An example of a vEB tree of order 16 can be seen below.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.5,keepaspectratio]{Images/vebtree.jpg}
-    \label{fig:veb_tree}
-    \caption{Van Emde Boas Trees (``proto van Emde Boas Trees". geeksforgeeks.org)}
+    \includegraphics[width=\textwidth,keepaspectratio]{Images/vEB_tree_GFG.jpg}
+    \label{fig: vEB}
+    \caption{An example proto van Emde Boas Tree from GeeksForGeeks.org}
 \end{figure}
 
-Unlike other structures, the index addressable structure it is built on allows for insertion, deletion, and searching in constant $O(1)$ time simply by changing the bit at the index representing the value in the tree and updating the summary vector. The major strength of vEB trees is in its ability to find the next nearest value from any given value in $O(\text{log}\text{log} M)$ time ($M$ being the total number of possible integers in $2m$).
+Unlike other structures, the index addressable nature of the structure vEB trees are buit on allows for location, insertion, and deletion operations to be performed in constant $O(\text{1})$ time simply by changing the bit at the index representing the value in the tree, then updating the summary vector. The major strength of vEB trees over other structures is how it can handle locating the next positive value from any given value in $O(\text{log log} M)$ time.
 
-An example use case for vEB trees may be in the location of the nearest empty parking space. Assuming that the car is near a parking space, that the spaces are ordered by distance from one another (i.e. space \#3 is closer to space \#5 than space \#10), and that a $1$ represents an empty parking space. After locating the current spot in constant time (which we will assume to be full), the ability of vEB trees to find a successor (or predecessor) of an empty spot in $O(\text{log}\text{log} M)$ might prove useful.
+An example use case for vEB trees might include the location of the next nearest empty parking space. Assuming that 1) the car is near a parking space that is already taken, 2) that the spaces are ordered in a way that represents distance from one another (i.e. space \#3 is closer to space \#5 than space \#6), and 3) that a 1 will represent an empty parking space. After locating the current spot in constant time, the ability of vEB trees to find a successor or predecessor of an empty spot in $O(\text{log log } M)$ time might prove useful.
 
-Unfortunately, the limitations of vEB trees make other algorithms (such as Skip Lists) much more preferable for solving successor and predecessor problems. While the constant time insertion and deletion are ideal, the limitation that they may only represent integers values is a major limitation. The fixed size also restricts what the structure can represent. And finally, the fixed space requirement of $O(M)$ makes the structure cumbersome. These drawbacks, combined with the fact that structures like Skip Lists can perform next nearest neighbor functions on more versatile objects in $O(\text{log} n)$ time, makes them more useful over vEB trees.
+Unfortunately, the limitations of vEB trees make other algorithms (such as Skip Lists) much more preferable for solving successor and predecessor problems. While the constant time insertion and deletion are ideal, the limitation that they may only represent integer values is a major limitation. The fixed size also restricts what the structure can be allowed to represent, since the data may only be dynamic within a certain range. And finally, the fixed space requirement of $O(\text{M})$ makes the structure cumbersome. These drawbacks, combined with the fact that structures like Skip Lists can perform next nearest neighbor functions on more versatile objects in $O(\text{log} n)$ time, makes them more useful over vEB trees.
 
 \pagebreak
 
