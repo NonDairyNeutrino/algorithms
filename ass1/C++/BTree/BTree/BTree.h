@@ -41,7 +41,6 @@ struct Node
         _is_leaf = false;
         child->parent = this;
         children.push_back(child);
-        //TODO: push the child in a sorted manor
         sort(children.begin(), children.end(), CompareNodeByFirstElement);
     }
 
