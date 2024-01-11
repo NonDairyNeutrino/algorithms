@@ -17,64 +17,70 @@
 
 \section*{Creating a 3-2 Tree}
 
+    A binary search tree (BST) is usually an excellent choice of data structure because inserting, deleting, and searching all take $O(n)$.  This linear complexity arises because the tree can be ``completely'' unbalanced, yielding a linear search.  B-Trees circumvent this by re-balancing upon each insertion and deletion.
 
+    An example of how the re-balancing is implemented for B-Trees can be shown in the context of the simplest B-Tree: the 3-2 tree.  The following algorithms implement insertion, traversal and ``bumping and breaking'' of the nodes of a 3-2 tree.
 
-    \begin{function}
-        \caption{bumpAndBreak(p)}
-        \DontPrintSemicolon
+    \subsection*{Recursive}
 
-        \KwIn{node $p$}
-        \KwOut{Null}
+        \begin{function}
+            \caption{bumpAndBreak(p)}
+            \DontPrintSemicolon
 
-        \eIf{p has a parent}{
-            insert $p.keys[2]$ into $p.parent.keys$
-        }{
-            create parent node with key $p.keys[2]$\;
-        }
-        remove $p.keys[2]$\;
-        create $parent.left$ with key $min \ p.keys$\;
-        create $parent.right$ with key $max \ p.keys$\;
-        remove $parent.middle$\;
-    \end{function}
+            \KwIn{node $p$}
+            \KwOut{Null}
 
-    \begin{function}
-        \caption{insertRecursive(p, k)}
-        \DontPrintSemicolon
-
-        \KwIn{node $p$, new key $k$}
-        \KwOut{3-2 B-tree}
-
-        \If{$p$ is a leaf}{
-            insert $k$ into $p.keys$\;
-            sort $p.keys$\;
-            \If{length of p.keys = 3}{
-                bumpAndBreak(p)
+            \eIf{p has a parent}{
+                insert $p.keys[2]$ into $p.parent.keys$
+            }{
+                create parent node with key $p.keys[2]$\;
             }
-        }
-        \ElseIf{$k < p.keys[1]$}{
-            \insertRecursive(p.left, k)\;
-        }
-        \ElseIf{$k > p.keys[end]$}{
-            \insertRecursive(p.right, k)\;
-        }
-        \Else{
-            \insertRecursive(p.middle, k)\;
-        }
-    \end{function}
+            remove $p.keys[2]$\;
+            create $parent.left$ with key $min \ p.keys$\;
+            create $parent.right$ with key $max \ p.keys$\;
+            remove $parent.middle$\;
+        \end{function}
 
-    \begin{function}
-        \caption{buildTree(keyList)}
-        \DontPrintSemicolon
+        \begin{function}
+            \caption{insertRecursive(p, k)}
+            \DontPrintSemicolon
 
-        \KwIn{List of keys}
-        \KwOut{3-2 Tree of given keys}
+            \KwIn{node $p$, new key $k$}
+            \KwOut{3-2 B-tree}
 
-        create root node with key $keyList[1]$\;
+            \If{$p$ is a leaf}{
+                insert $k$ into $p.keys$\;
+                sort $p.keys$\;
+                \If{length of p.keys = 3}{
+                    bumpAndBreak(p)
+                }
+            }
+            \ElseIf{$k < p.keys[1]$}{
+                \insertRecursive(p.left, k)\;
+            }
+            \ElseIf{$k > p.keys[end]$}{
+                \insertRecursive(p.right, k)\;
+            }
+            \Else{
+                \insertRecursive(p.middle, k)\;
+            }
+        \end{function}
 
-        \ForEach{$key \in keyList[2:end]$}{
-            insertRecursive(root, key)
-        }
-    \end{function}
+        \begin{function}
+            \caption{buildTree(keyList)}
+            \DontPrintSemicolon
+
+            \KwIn{List of keys}
+            \KwOut{3-2 Tree of given keys}
+
+            create root node with key $keyList[1]$\;
+
+            \ForEach{$key \in keyList[2:end]$}{
+                insertRecursive(root, key)
+            }
+        \end{function}
+
+    \subsection*{Iterative}
 
 \pagebreak
 
