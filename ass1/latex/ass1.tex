@@ -8,8 +8,8 @@
 \usepackage{hyperref}
 \usepackage[ruled, linesnumbered, noend]{algorithm2e}
 
-\title{CS 529: Advanced Data Structures \& Algorithms \\ Assignment 1}
-\author{Nathan Chapman, Hunter L., Andrew Struthers}
+\title{\vspace{-0.625in}CS 529: Advanced Data Structures \& Algorithms \\ Assignment 1}
+\author{Nathan Chapman, Hunter Lawrence, Andrew Struthers}
 \date{\today}
 
 \begin{document}
@@ -17,11 +17,13 @@
 
 \section*{Creating a 3-2 Tree}
 
-    A binary search tree (BST) is usually an excellent choice of data structure because inserting, deleting, and searching all take $O(n)$.  This linear complexity arises because the tree can be ``completely'' unbalanced, yielding a linear search.  B-Trees circumvent this by re-balancing upon each insertion and deletion.
+    A binary search tree (BST) is usually an excellent choice of data structure because inserting, deleting, and searching all take $O(n)$.  This linear complexity arises because the tree can be ``completely'' unbalanced, yielding a linear search.  B-Trees circumvent this by rebalancing upon each insertion and deletion.
 
     An example of how the re-balancing is implemented for B-Trees can be shown in the context of the simplest B-Tree: the 3-2 tree.  The following algorithms implement insertion, traversal and ``bumping and breaking'' of the nodes of a 3-2 tree.
 
     \subsection*{Recursive}
+
+        The core functionality of what differentiates a B-tree from a BST (i.e. the automatic rebalancing) is encapsulated in \texttt{bumpAndBreak}.
 
         \begin{function}
             \caption{bumpAndBreak(p)}
@@ -40,6 +42,8 @@
             create $parent.right$ with key $max \ p.keys$\;
             remove $parent.middle$\;
         \end{function}
+
+        We can use \texttt{bumpAndBreak} upon recursively traversing down to a leaf that, after insertion of the a new key, has 3 keys.
 
         \begin{function}
             \caption{insertRecursive(p, k)}
@@ -65,6 +69,10 @@
                 \insertRecursive(p.middle, k)\;
             }
         \end{function}
+    
+\pagebreak
+
+        Finally, we can exectute the above algorithms for each element in a list of keys to create a 3-2 B-Tree.
 
         \begin{function}
             \caption{buildTree(keyList)}
