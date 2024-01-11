@@ -6,7 +6,7 @@
 %\numberwithin{equation}{subsection}
 \usepackage{graphicx, caption}
 \usepackage{hyperref}
-\usepackage{algorithm2e}
+\usepackage[ruled, linesnumbered, noend]{algorithm2e}
 
 \title{CS 529: Advanced Data Structures \& Algorithms \\ Assignment 1}
 \author{Nathan Chapman, Hunter L., Andrew Struthers}
@@ -16,23 +16,63 @@
 \maketitle
 
 \section*{Algorithm for creating a 3-2 B-Tree}
+    % for more information see here
+    % https://www.overleaf.com/learn/latex/Algorithms#The_algorithm2e_package
+    % \begin{algorithm}
+    %     $i\gets 10$\;
+    %     \eIf{$i\geq 5$}
+    %     {
+    %         $i\gets i-1$\;
+    %     }{
+    %         \If{$i\leq 3$}
+    %         {
+    %             $i\gets i+2$\;
+    %         }
+    %     }
+    % \end{algorithm}
 
-    Insertion: If node has 3 keys, bump up the middle one and restructure the rest to be children of a binary tree.
+    \begin{function}
+        \caption{bumpAndBreak(p)}
+        \DontPrintSemicolon
 
-    Test alogrithm
-    % for more information on the algorithm environment and algorithm2e package, see here: https://www.overleaf.com/learn/latex/Algorithms#The_algorithm2e_package
-    \begin{algorithm}
-        $i\gets 10$\;
-        \eIf{$i\geq 5$}
-        {
-            $i\gets i-1$\;
+        \KwIn{node $p$}
+        \KwOut{Null}
+
+        \eIf{p has a parent}{
+            insert $p.keys[2]$ into $p.parent.keys$
         }{
-            \If{$i\leq 3$}
-            {
-                $i\gets i+2$\;
+            create parent node with key $p.keys[2]$\;
+        }
+        remove $p.keys[2]$\;
+        create $parent.left$ with key $min \ p.keys$\;
+        create $parent.right$ with key $max \ p.keys$\;
+        remove $parent.middle$\;
+    \end{function}
+
+    \begin{function}
+        \caption{insertRecursive(p, k)}
+        \DontPrintSemicolon
+
+        \KwIn{node $p$, new key $k$}
+        \KwOut{3-2 B-tree}
+
+        \If{$p$ is a leaf}{
+            insert $k$ into $p.keys$\;
+            sort $p.keys$\;
+            \If{length of p.keys = 3}{
+                bumpAndBreak(p)
             }
         }
-    \end{algorithm}
+        \ElseIf{$k < p.keys[1]$}{
+            \insertRecursive(p.left, k)\;
+        }
+        \ElseIf{$k > p.keys[end]$}{
+            \insertRecursive(p.right, k)\;
+        }
+        \Else{
+            \insertRecursive(p.middle, k)\;
+        }
+    \end{function}
 
 \pagebreak
 
