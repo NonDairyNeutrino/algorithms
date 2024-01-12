@@ -22,74 +22,84 @@
 
     An example of how the re-balancing is implemented for B-Trees can be shown in the context of the simplest B-Tree: the 3-2 tree.  The following algorithms implement insertion, traversal and ``bumping and breaking'' of the nodes of a 3-2 tree.
 
-    \subsection*{Recursive}
+    \subsection*{Recursive Implementation}
 
-        The core functionality of what differentiates a B-tree from a BST (i.e. the automatic rebalancing) is encapsulated in \texttt{bumpAndBreak}.
+        \subsubsection*{Algorithm}
 
-        \begin{function}
-            \caption{bumpAndBreak(p)}
-            \DontPrintSemicolon
+            The core functionality of what differentiates a B-tree from a BST (i.e. the automatic rebalancing) is encapsulated in \texttt{bumpAndBreak}.
 
-            \KwIn{node $p$}
-            \KwOut{Null}
+            \begin{function}
+                \caption{bumpAndBreak(p)}
+                \DontPrintSemicolon
 
-            \eIf{p has a parent}{
-                insert $p.keys[2]$ into $p.parent.keys$
-            }{
-                create parent node with key $p.keys[2]$\;
-            }
-            remove $p.keys[2]$\;
-            create $parent.left$ with key $min \ p.keys$\;
-            create $parent.right$ with key $max \ p.keys$\;
-            remove $parent.middle$\;
-        \end{function}
+                \KwIn{node $p$}
+                \KwOut{Null}
 
-        We can use \texttt{bumpAndBreak} upon recursively traversing down to a leaf that, after insertion of the a new key, has 3 keys.
-
-        \begin{function}
-            \caption{insertRecursive(p, k)}
-            \DontPrintSemicolon
-
-            \KwIn{node $p$, new key $k$}
-            \KwOut{3-2 B-tree}
-
-            \If{$p$ is a leaf}{
-                insert $k$ into $p.keys$\;
-                sort $p.keys$\;
-                \If{length of p.keys = 3}{
-                    bumpAndBreak(p)
+                \eIf{p has a parent}{
+                    insert $p.keys[2]$ into $p.parent.keys$
+                }{
+                    create parent node with key $p.keys[2]$\;
                 }
-            }
-            \ElseIf{$k < p.keys[1]$}{
-                \insertRecursive(p.left, k)\;
-            }
-            \ElseIf{$k > p.keys[end]$}{
-                \insertRecursive(p.right, k)\;
-            }
-            \Else{
-                \insertRecursive(p.middle, k)\;
-            }
-        \end{function}
-    
-\pagebreak
+                remove $p.keys[2]$\;
+                create $parent.left$ with key $min \ p.keys$\;
+                create $parent.right$ with key $max \ p.keys$\;
+                remove $parent.middle$\;
+            \end{function}
 
-        Finally, we can exectute the above algorithms for each element in a list of keys to create a 3-2 B-Tree.
+            We can use \texttt{bumpAndBreak} upon recursively traversing down to a leaf that, after insertion of the a new key, has 3 keys.
 
-        \begin{function}
-            \caption{buildTree(keyList)}
-            \DontPrintSemicolon
+            \begin{function}
+                \caption{insertRecursive(p, k)}
+                \DontPrintSemicolon
 
-            \KwIn{List of keys}
-            \KwOut{3-2 Tree of given keys}
+                \KwIn{node $p$, new key $k$}
+                \KwOut{3-2 B-tree}
 
-            create root node with key $keyList[1]$\;
+                \If{$p$ is a leaf}{
+                    insert $k$ into $p.keys$\;
+                    sort $p.keys$\;
+                    \If{length of p.keys = 3}{
+                        bumpAndBreak(p)
+                    }
+                }
+                \ElseIf{$k < p.keys[1]$}{
+                    \insertRecursive(p.left, k)\;
+                }
+                \ElseIf{$k > p.keys[end]$}{
+                    \insertRecursive(p.right, k)\;
+                }
+                \Else{
+                    \insertRecursive(p.middle, k)\;
+                }
+            \end{function}
+        
+    \pagebreak
 
-            \ForEach{$key \in keyList[2:end]$}{
-                insertRecursive(root, key)
-            }
-        \end{function}
+            Finally, we can exectute the above algorithms for each element in a list of keys to create a 3-2 B-Tree.
 
-    \subsection*{Iterative}
+            \begin{function}
+                \caption{buildTree(keyList)}
+                \DontPrintSemicolon
+
+                \KwIn{List of keys}
+                \KwOut{3-2 Tree of given keys}
+
+                create root node with key $keyList[1]$\;
+
+                \ForEach{$key \in keyList[2:end]$}{
+                    insertRecursive(root, key)
+                }
+            \end{function}
+
+        \subsubsection*{Complexity}
+
+            To analyze the complexity of this algorithm, each sub-algorithm can be inspected and their complexities multiplied.  We first start with the top most algorithm \texttt{buildTree}, and follow the stack trace down to \texttt{bumpAndBreak}.
+
+            Because \texttt{buildTree} must be called for every element in the input list of length $n$, its complexity is $O(n)$.  Then for each element in the input list, we must recursively traverse the tree until reaching the point at which the new key will be in a sorted position; as with all binary trees, this takes $O(\lg(n))$ time.  Finally, the operations in \texttt{bumpAndBreak} are only ever on a single input and thus the total number does not scale with the size of the input.
+
+            In total, we combine each of these to acheive a runtime complexity of $O(n \lg (n))$ of using this algorithm to create a 3-2 B-tree from a list of $n$ keys.
+
+    \subsection*{Iterative Implementation}
 
 We also wrote an interative version of the 3-2 Tree construction, seen below. For each key in the keys list, we call function \texttt{insertKey} with a reference to the head node of the tree and the key we want to insert. The algorithm then traverse iteratively down the tree from the head, finding the leaf where the key should be inserted. Once that leaf is found, insert the key into that leaf's keys, preserving the sorted order of the keys. Then, the algorithm handles the possible case where there are 3 keys in a node, by breaking up the current node into a left and right node, whose children and keys are assigned from the current node. The middle key gets inserted into the current node's parent, and then sets the current to the current node's parent. This process is repeated until the current node no longer has 3 keys. The tree grows at the root level, so all leaves are preserved at the bottom of the tree.
 
@@ -166,7 +176,7 @@ We also wrote an interative version of the 3-2 Tree construction, seen below. Fo
 	}
 \end{function}
 
-\vspace*{4in}
+\vspace{1in}
 
 \section*{Discussion on van Emde Boas Trees}
 
