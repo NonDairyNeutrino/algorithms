@@ -1,14 +1,24 @@
 \documentclass{article}
+% =======PACKAGES=======
+% FORMATTING
 \usepackage[margin=0.625in]{geometry}
 \usepackage{parskip, setspace}
 \setstretch{1.15}
+% TYPESETTING - MATH
 \usepackage{amsmath, amsfonts}
-%\numberwithin{equation}{subsection}
+% RICH
 \usepackage{graphicx, caption}
 \usepackage{hyperref}
 \usepackage[ruled, linesnumbered, noend]{algorithm2e}
-\usepackage[english]{babel}
+% BIBLIOGRAPHY
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\addbibresource{bib.bib}
 
+% =======TITLE=======
 \title{\vspace*{-0.625in}CS 529: Advanced Data Structures \& Algorithms \\ Assignment 2: $k$-d Trees}
 \author{Nathan Chapman, Hunter Lawrence, Andrew Struthers}
 \date{\today}
@@ -23,6 +33,6 @@
 
     \section*{Applications}
 
-
+    \printbibliography
 
 \end{document}
