@@ -13,7 +13,6 @@
 % BIBLIOGRAPHY
 \usepackage[
 backend=biber,
-style=alphabetic,
 sorting=ynt
 ]{biblatex}
 \addbibresource{bib.bib}
@@ -29,10 +28,42 @@ sorting=ynt
 
     \section*{Summary}
 
-        
+        \subsection*{Formalizing the Nearest Neighbor Search using $k$-D Trees in Machine Learning}
+
+            We begin with the psuedo-code of the NNS, adapted from Python\cite{CMUSlides}.
+
+            \begin{function}
+                \caption{NN(Point Q, kdTree T, int cd, Rect BB)}
+                \DontPrintSemicolon
+
+                \KwIn{Point, $k$-d Tree, Integer, Rectangle}
+                \KwOut{}
+
+                \tcp{if this bounding box is too far, do nothing}
+                \If{T does not exist or the distance between Q and BB is more than the current best}{
+                    \Return{}
+                }
+
+                \tcp{if this point is better than the best}
+                $dist \gets$ distance between $Q$ and $T.data$\;
+                \If{dist $<$ distance between Q and T.data}{
+                    $best \gets$ T.data\;
+                    best\_distance $\gets$ dist
+                }
+
+                \tcp{visit subtrees in most promising oder}
+                \eIf{Q[cd] $<$ T.data[cd]}{
+                    \NN(Q, T.left, next\_cd, BB.trimLeft(cd, t.data))\;
+                    \NN(Q, T.right, next\_cd, BB.trimRight(cd, t.data))
+                }{
+                    \NN(Q, T.right, next\_cd, BB.trimRight(cd, t.data))\;
+                    \NN(Q, T.left, next\_cd, BB.trimLeft(cd, t.data))
+                }
+            \end{function}
 
     \section*{Applications}
 
+    \newpage
     \printbibliography
 
 \end{document}
