@@ -39,17 +39,46 @@ sorting=ynt
 ]{biblatex}
 \addbibresource{bib.bib}
 
+\newcommand{\integer}{\textbf{int} }
+
 % =======TITLE=======
-\title{\vspace*{-0.625in}CS 529: Advanced Data Structures \& Algorithms \\ Assignment 3: String Matching Algorithms and Dynamic Programming}
+\title{\vspace*{-0.625in}CS 529: Advanced Data Structures \& Algorithms \\ Assignment 3: String Matching Algorithms \& Dynamic Programming}
 \author{Nathan Chapman, Hunter Lawrence, Andrew Struthers}
 \date{\today}
 
 \begin{document}
 
     \maketitle
-    \section*{}
 
-    
+    \section*{Introduction}
+
+        Let $s_1, s_2$ be strings of length $m, n$ respectively, and $(i, j) \in \mathbb{Z}_m \times \mathbb{Z}_n$ i.e. $i, j$ are integers such that $0 \leq i \leq m - 1, 0 \leq j \leq n - 1$.  We consider the \texttt{opt} algorithm as defined in algorithm \ref{alg:opt}.
+
+        \begin{function}
+            \caption{opt(\integer $i$, \integer $j$)}
+            \label{alg:opt}
+            \KwIn{Indices of strings}
+            \KwOut{Interger cost of best string alignment}
+            
+            \If{i = m}{
+                \Return{2(n - j)}
+            }
+            \eIf{j = n}{
+                \Return{2(m - i)}
+            }{
+                \eIf{$s_1$[i] = $s_2$[j]}{
+                    $penalty \gets 0$
+                }{
+                    $penalty \gets 1$
+                }
+                \Return{$\min$(\opt(i + 1, j + 1) + penalty, \opt(i + 1, j) + 2, \opt(i, j + 1) + 2)}
+            }
+        \end{function}
+    \section*{Runtime Complexity of \texttt{opt}}
+
+    \section*{Sequence Alignment with Dynamic Programming}
+
+    \section*{Finding an Optimal Alignment}
 
     \printbibliography
 
