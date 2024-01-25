@@ -7,6 +7,8 @@
 % TYPESETTING - MATH
 \usepackage{amsmath, amsfonts}
 \usepackage[ruled, linesnumbered, noend]{algorithm2e}
+\NewCommandCopy{\legacyunderscore}{\_}
+\renewcommand{\_}{\ifincsname_\else\legacyunderscore\fi}
 \usepackage{listings}
 \usepackage{xcolor}
 
@@ -74,9 +76,41 @@ sorting=ynt
                 \Return{$\min$(\opt(i + 1, j + 1) + penalty, \opt(i + 1, j) + 2, \opt(i, j + 1) + 2)}
             }
         \end{function}
+
     \section*{Runtime Complexity of \texttt{opt}}
 
+\pagebreak
     \section*{Sequence Alignment with Dynamic Programming}
+
+        While the \ref{alg:opt} algorithm directly has exponential complexity, it can be simply changed to use dynamic programming techniques, such as memoization i.e. storing results so they don't need to be calculated again, to greatly reduce the runtime.[DYNAMIC PROGRAMMING APPROACH IN WORDS HERE]
+
+        Let $s_1, s_2$ be strings of length $m, n$ respectively, and $(i, j) \in \mathbb{Z}_m \times \mathbb{Z}_n$ i.e. $i, j$ are integers such that $0 \leq i \leq m - 1, 0 \leq j \leq n - 1$.  We consider the \texttt{opt\_dynamic} algorithm as defined in algorithm \ref{alg:opt_Dynamic}.
+
+        \begin{function}
+            \caption{opt\_dynamic(\integer $i$, \integer $j$)}
+            \label{alg:opt_Dynamic}
+            \KwIn{Indices of strings}
+            \KwOut{Interger cost of best string alignment}
+            $memo \gets empty\_dictionary$ \tcp{initialize tuple-cost dictionary}
+            \If{(i, j) $\in$ memo}{
+                \Return{$memo[(i, j)]$}
+            }
+            \If{i = m}{
+                \Return{$2(n - j)$}
+            }
+            \eIf{j = n}{
+                \Return{$2(m - i)$}
+            }{
+                \eIf{$s_1[i]$ = $s_2[j]$}{
+                    $penalty \gets 0$
+                }{
+                    $penalty \gets 1$
+                }
+                $r \gets \min$(\opt$(i + 1, j + 1) + penalty$, \opt$(i + 1, j) + 2$, \opt$(i, j + 1) + 2)$\;
+                $memo[(i, j)] \gets r$\;
+                \Return{r}
+            }
+        \end{function}
 
     \section*{Finding an Optimal Alignment}
 
