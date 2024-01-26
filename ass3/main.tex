@@ -80,9 +80,10 @@ sorting=ynt
 
     \section*{Runtime Complexity of \texttt{opt}}
 
-    \texttt{opt(i, j)} seeks to find the penalty number for the optimal alignment of strings $s_1, s_2$ by exploring all possible penalty values which can be incurred by single character shifts. The results of this will allow a dynamic programming algorithm (specified later) to find out how to match the sequences according to this value.
+    \texttt{opt(i, j)} seeks to find the penalty number for the optimal alignment of strings $s_1, s_2$ by exploring all possible penalty values which can be incurred by single character shifts. The results of this will allow a dynamic programming algorithm (specified below) to find out how to match the sequences according to this value.
 
-    because \texttt{opt()}, as depicted above, incurs three separate recursive calls, only ending when either $i \leq  n $ OR $ j \leq m$. This results in an exponential worst case time efficiency of $O(3^n)$. 
+    Because \texttt{opt()}, as depicted above, incurs three separate recursive calls, with each branch ending when either $i \leq  n $ OR $ j \leq m$. This results in an exponential worst case time efficiency of $O(3^n)$.
+    
 \pagebreak
     \section*{Sequence Alignment with Dynamic Programming}
 
