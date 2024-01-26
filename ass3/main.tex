@@ -82,12 +82,14 @@ sorting=ynt
 
     \texttt{opt(i, j)} seeks to find the penalty number for the optimal alignment of strings $s_1, s_2$ by exploring all possible penalty values which can be incurred by single character shifts. The results of this will allow a dynamic programming algorithm (specified below) to find out how to match the sequences according to this value.
 
-    Because \texttt{opt()}, as depicted above, incurs three separate recursive calls, with each branch ending when either $i \leq  n $ OR $ j \leq m$. This results in an exponential worst case time efficiency of $O(3^n)$.
+    Because \texttt{opt()}, as depicted above, incurs three separate recursive calls, with each branch ending when either $i \leq  n $ OR $ j \leq m$. This results in an exponential worst case time efficiency of $O(3^n)$. Additionally, without dynamic programming, the space complexity of this algorithm is $max(m, n)$ because the recursive tree has at most a height of the length of the longest string being analyzed.
     
 \pagebreak
     \section*{Sequence Alignment with Dynamic Programming}
 
-        While the \ref{alg:opt} algorithm directly has exponential complexity, it can be simply changed to use dynamic programming techniques, such as memoization i.e. storing results so they don't need to be calculated again, to greatly reduce the runtime.[DYNAMIC PROGRAMMING APPROACH IN WORDS HERE]
+        While the \ref{alg:opt} algorithm directly has exponential complexity, it can be simply changed to use dynamic programming techniques, such as memoization i.e. storing results so they don't need to be calculated again, to greatly reduce the runtime. Using memoization, we can build a map of $(i, j)$ tuples, that map to an integer result. This will allow us to look for a given $(i, j)$ tuple before calculating the result, saving complexity whenever the algorithm produces an $(i, j)$ tuple we already know the answer to. This will drop the runtime efficiency from exponential to $O(mn)$, which is substantially asymptotically better. 
+
+	Now that the code is optimized using dynamic programming, we can start modifying the code. We can modify this code to not only calculate the cost of the most optimal alignment, we can have it actually build the most optimal alignment. We can do this by changing minimal code from the \ref{alg:opt} function above. We will first build an $(m+1)\times (n+1)$ matrix, where we can store the result of the \ref{alg:opt} function in each row/column pair. As we are calculating the results for a given $(i, j)$ pair, we will also update the matrix with a few properties. Due to the depth-first nature of recursion, the result of the bottom-right most entry of our matrix will be calculated first. Then, each new cell will be the result of either the cell diagonally down-right, the cell directly below, or the cell directly to the right of the current cell. For all cells in our matrix, we will track which cell was the direct influence. This way, we will be able to traverse the matrix from $(0, 0)$ to the bottom-right most cell, following the chain of cells that directly inspired the one before. This will produce the minimum traversal, and we can build our aligned strings according to a few rules. First, we analyze the \ref{alg:opt_Dynamic} algorithm to build the matrix. 
 
         Let $s_1, s_2$ be strings of length $m, n$ respectively, and $(i, j) \in \mathbb{Z}_m \times \mathbb{Z}_n$ i.e. $i, j$ are integers such that $0 \leq i \leq m - 1, 0 \leq j \leq n - 1$.  We consider the \texttt{opt\_dynamic} algorithm as defined in algorithm \ref{alg:opt_Dynamic}.
 
@@ -98,26 +100,51 @@ sorting=ynt
             \KwIn{Indices of strings}
             \KwOut{Interger cost of best string alignment}
             $memo \gets empty\_dictionary$ \tcp{initialize tuple-cost dictionary}
+            $matrix \gets (m + 1) \times (n + 1) matrix$\;
             \If{(i, j) $\in$ memo}{
                 \Return{$memo[(i, j)]$}
             }
             \If{i = m}{
+                $matrix [i, j].cost \gets 2(n-j)$
                 \Return{$2(n - j)$}
             }
-            \eIf{j = n}{
+            \ElseIf{j = n}{
+                $matrix [i, j].cost \gets 2(m-1)$
                 \Return{$2(m - i)$}
-            }{
+            }\Else{
                 \eIf{$s_1[i]$ = $s_2[j]$}{
                     $penalty \gets 0$
                 }{
                     $penalty \gets 1$
                 }
-                $r \gets \min$(\opt$(i + 1, j + 1) + penalty$, \opt$(i + 1, j) + 2$, \opt$(i, j + 1) + 2)$\;
+                $diag\_traversal \gets $\opt$(i + 1, j + 1) + penalty$\;
+                $right\_traversal \gets $ \opt$(i + 1, j) + 2$\;
+                $down\_traversal \gets $\opt$(i, j + 1) + 2$\;
+
+                $r \gets \min(diag\_traversal, right\_traversal, down\_traversal)$\;
+                $matrix [i, j].cost \gets r$\;
+                
+                \If{$diag\_traversal = \min(diag\_traversal, right\_traversal, down\_traversal)$}
+                {
+                    $matrix [i, j].determined \gets matrix[i + 1, j + 1]$\;
+                    $matrix [i, j].direction \gets DIAGONAL$\;
+                }
+                \ElseIf{$right\_traversal = \min(diag\_traversal, right\_traversal, down\_traversal)$}
+                {
+                    $matrix [i, j].determined \gets matrix[i + 1, j]$\;
+                    $matrix [i, j].direction \gets UP$\;
+                }
+		\Else
+                {
+                    $matrix [i, j].determined \gets matrix[i, j + 1]$\;
+                    $matrix [i, j].direction \gets LEFT$\;
+                }
                 $memo[(i, j)] \gets r$\;
                 \Return{r}
             }
         \end{function}
-
+\pagebreak
+        We can call \ref{alg:opt_Dynamic} by \texttt{opt(0, 0)}. This will build our state matrix that will represent the optimal alignment. We will now create two new variables, representing the aligned $x$ and $y$ strings. To actually build the optimal alignment, we start at the bottom-right most cell, traversing up through the chain of cells that the current cell impacted, until we get to the top left most cell. If we move diagonally, we take the character in the $i$th row of the $x$ sequence and add it to the aligned $x$ string, and the character in the $j$th row of the $y$ sequence gets added to the aligned $y$ string. If we move up, the character in the $i$th row of the $x$ sequence and add it to the aligned $x$ string and we add a '-' to the aligned $y$ string. Likewise, if we instead move left, the character in the $j$th row of the $y$ sequence gets added to the aligned $y$ string, and a '-' is added into the aligned $x$ sequence. We build the strings from right to left, and we end with two fully built and aligned strings. The use of dynamic programming, in this case, allows us to avoid calculating elements in the $(m+1)\times(n+1)$ matrix multiple times. We only do $(m+1)\cdot(n+1)$ recursive calls, meaning that the building of the optimal alignment is $O(m*n)$ time with dynamic programming, once again a substantial improvement over the exponential time without dynamic programming. 
     \section*{Finding an Optimal Alignment}
 
     \printbibliography
