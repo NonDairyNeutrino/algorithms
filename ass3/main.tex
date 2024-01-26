@@ -7,6 +7,7 @@
 % TYPESETTING - MATH
 \usepackage{amsmath, amsfonts}
 \usepackage[ruled, linesnumbered, noend]{algorithm2e}
+% algorithm2e commands: https://ctan.math.washington.edu/tex-archive/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf
 \NewCommandCopy{\legacyunderscore}{\_}
 \renewcommand{\_}{\ifincsname_\else\legacyunderscore\fi}
 \usepackage{listings}
@@ -19,7 +20,7 @@
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
 \lstset{frame=tb,
-  language=Java,
+  language=Python,
   aboveskip=3mm,
   belowskip=3mm,
   showstringspaces=false,
@@ -71,7 +72,7 @@ sorting=ynt
             \If{i = m}{
                 \Return{2(n - j)}
             }
-            \eIf{j = n}{
+            \If{j = n}{
                 \Return{2(m - i)}
             }{
                 \eIf{$s_1$[i] = $s_2$[j]}{
@@ -85,16 +86,15 @@ sorting=ynt
 
     \section*{Runtime Complexity of \texttt{opt}}
 
-    \texttt{opt(i, j)} seeks to find the penalty number for the optimal alignment of strings $s_1, s_2$ by exploring all possible penalty values which can be incurred by single character shifts. The results of this will allow a dynamic programming algorithm (specified below) to find out how to match the sequences according to this value.
+        \texttt{opt(i, j)} seeks to find the penalty number for the optimal alignment of strings $s_1, s_2$ by exploring all possible penalty values which can be incurred by single character shifts. The results of this will allow a dynamic programming algorithm (specified below) to find out how to match the sequences according to this value.
 
-    Because \texttt{opt()}, as depicted above, incurs three separate recursive calls, with each branch ending when either $i \leq  n $ OR $ j \leq m$. This results in an exponential worst case time efficiency of $O(3^n)$. Additionally, without dynamic programming, the space complexity of this algorithm is $max(m, n)$ because the recursive tree has at most a height of the length of the longest string being analyzed.
-    
+        Because \ref{alg:opt} incurs three separate recursive calls for every original call, each branch ends when either $i == n$ OR $j = m$. This results in an exponential worst case time efficiency of $O(3^n)$. Additionally, without dynamic programming, the space complexity of this algorithm is $\max(m, n)$ because the recursive tree has at most a height of the length of the longest string being analyzed.
 
     \section*{Sequence Alignment with Dynamic Programming}
 
-        While the \ref{alg:opt} algorithm directly has exponential complexity, it can be simply changed to use dynamic programming techniques, such as memoization i.e. storing results so they don't need to be calculated again, to greatly reduce the runtime. Using memoization, we can build a map of $(i, j)$ tuples, that map to an integer result. This will allow us to look for a given $(i, j)$ tuple before calculating the result, saving complexity whenever the algorithm produces an $(i, j)$ tuple we already know the answer to. This will drop the runtime efficiency from exponential to $O(mn)$, which is substantially asymptotically better. 
+        While the \ref{alg:opt} algorithm directly has exponential complexity, it can be simply changed to use dynamic programming techniques, such as memoization i.e. storing results so they don't need to be calculated again, to greatly reduce the runtime. Using memoization, we can build a map of $(i, j)$ tuples, that map to an integer result. This will allow us to look for a given $(i, j)$ tuple before calculating the result, saving complexity whenever the algorithm produces an $(i, j)$ tuple we already know the answer to. This will drop the runtime efficiency from exponential to $O(mn)$, which is substantially asymptotically better. Memoization will increase the space complexity to $O(mn)$.
 
-	Now that the code is optimized using dynamic programming, we can start modifying the code. We can modify this code to not only calculate the cost of the most optimal alignment, we can have it actually build the most optimal alignment. We can do this by changing minimal code from the \ref{alg:opt} function above. We will first build an $(m+1)\times (n+1)$ matrix, where we can store the result of the \ref{alg:opt} function in each row/column pair. As we are calculating the results for a given $(i, j)$ pair, we will also update the matrix with a few properties. Due to the depth-first nature of recursion, the result of the bottom-right most entry of our matrix will be calculated first. Then, each new cell will be the result of either the cell diagonally down-right, the cell directly below, or the cell directly to the right of the current cell. For all cells in our matrix, we will track which cell was the direct influence. This way, we will be able to traverse the matrix from $(0, 0)$ to the bottom-right most cell, following the chain of cells that directly inspired the one before. This will produce the minimum traversal, and we can build our aligned strings according to a few rules. First, we analyze the \ref{alg:opt_Dynamic} algorithm to build the matrix. 
+	    Now that the code is optimized using dynamic programming, we can start modifying the code. We can modify this code to not only calculate the cost of the most optimal alignment, we can have it actually build the most optimal alignment. We can do this by changing minimal code from the \ref{alg:opt} function above. We will first build an $(m+1)\times (n+1)$ matrix, where we can store the result of the \ref{alg:opt} function in each row/column pair. As we are calculating the results for a given $(i, j)$ pair, we will also update the matrix with a few properties. Due to the depth-first nature of recursion, the result of the bottom-right most entry of our matrix will be calculated first. Then, each new cell will be the result of either the cell diagonally down-right, the cell directly below, or the cell directly to the right of the current cell. For all cells in our matrix, we will track which cell was the direct influence. This way, we will be able to traverse the matrix from $(0, 0)$ to the bottom-right most cell, following the chain of cells that directly inspired the one before. This will produce the minimum traversal, and we can build our aligned strings according to a few rules. First, we analyze the \ref{alg:opt_Dynamic} algorithm to build the matrix. 
 
         Let $s_1, s_2$ be strings of length $m, n$ respectively, and $(i, j) \in \mathbb{Z}_m \times \mathbb{Z}_n$ i.e. $i, j$ are integers such that $0 \leq i \leq m - 1, 0 \leq j \leq n - 1$.  We consider the \texttt{opt\_dynamic} algorithm as defined in algorithm \ref{alg:opt_Dynamic}.
 
