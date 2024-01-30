@@ -60,7 +60,7 @@ sorting=ynt
 
 	\item Write a CREW PRAM algorithm for adding all n numbers in a list in $O(\log n)$ time.
 	\begin{enumerate}
-		\item
+		\item break list into ``$\log n$'' chunks, each of length $n / \log n$.  Each summation takes $n / \log n$ time, but all happens at the same time.  Then exclusively write ``\verb|sum += subsum|'' $\log n$ times.  This is a CREW-PRAM summation in $\log n$ time.
 	\end{enumerate}
 
 	\item Write a PRAM algorithm using $n^3$ processors to multiply two $n\times n$ matrices. Your algorithm should run in $O(\log n)$ time.
