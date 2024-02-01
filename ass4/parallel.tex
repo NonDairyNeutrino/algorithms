@@ -99,7 +99,7 @@ This will take a list of $n$ elements, and break the list up into smaller subsec
 
 	\item Write a PRAM algorithm using $n^3$ processors to multiply two $n\times n$ matrices. Your algorithm should run in $O(\log n)$ time.
 	\begin{enumerate}
-		\item
+		\item With the given $n^3$ processors, we can multiply two $n x n$ matricies $M_1$ and $M_2$ using $n^2$ processors to calculate each element in an $n x n$ solution matrix $S$. for each element $[i, j]$ in matrix $S$, for some non-negative integers $i$ and $j$ in range $n$, we can use an additional n processors to calculate the product of each $M[i, j] * M_2[i, j_x]$ where $x$ goes from $0$ to $n$, and then proceed to add these numbers in $O(\log n)$ time using the function $addElements()$, defined above, and passing it the list of values in the column $M[i]$.
 	\end{enumerate}
 
 \end{enumerate}
