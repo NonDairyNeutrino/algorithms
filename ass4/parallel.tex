@@ -58,9 +58,40 @@ sorting=ynt
 		\item
 	\end{enumerate}
 
-	\item Write a CREW PRAM algorithm for adding all n numbers in a list in $O(\log n)$ time.
+	\item Write a CREW PRAM algorithm for adding all $n$ numbers in a list in $O(\log n)$ time.
 	\begin{enumerate}
-		\item break list into ``$\log n$'' chunks, each of length $n / \log n$.  Each summation takes $n / \log n$ time, but all happens at the same time.  Then exclusively write ``\verb|sum += subsum|'' $\log n$ times.  This is a CREW-PRAM summation in $\log n$ time.
+		\item The standard way of adding all $n$ numbers in a list is the naive approach of having a global $sum$ variable, then iterating through the list linearly, adding the elements of the list to $sum$ one by one. We can improve this to $O(\log n)$ time with the following algorithm:
+
+	\begin{function}
+            \DontPrintSemicolon
+            \caption{addElements(list)}
+            \label{alg:addElements}
+            \KwIn{$n$-length list of numbers}
+            \KwOut{sum of all elements in $list$}
+            $sum \gets 0$ as a variable for the sum of all elements\;
+            set $q$ to some division of $n$, such as $\sqrt{n}$\;
+            create $q$ threads, that are each responsible for summing $\frac{n}{q}$ numbers\;
+            \ForEach{$thread \in threads$}
+            {
+                add the result of \texttt{threadAdd($list$, $q$, $i$)} to $sum$
+            }
+            \Return{$sum$}
+        \end{function}
+
+	\begin{function}
+            \DontPrintSemicolon
+            \caption{threadAdd(list, q, i)}
+            \label{alg:threadAdd}
+            \KwIn{$n$-length list of numbers, $q$ elements of $list$ to add, $i$ thread ID}
+            \KwOut{sum of elements in $list[q*i, q*i + q]$ ($q$ elements)}
+            $sum \gets 0$ as a variable for the sum of this thread's elements\;
+            \For{$i \gets q*i$, $i < q*i + q$}
+            {
+                add $list\left[i\right]$ to $sum$
+            }
+            \Return{$sum$}
+        \end{function}
+This will take a list of $n$ elements, and break the list up into smaller subsections. Each process is responsible for linearly adding a chunk of the original list together. This is a common divide and conqure approach, where each process adds small subset of the original list together all at the same time. The linear operation on a subset of the original list takes $O(\log n)$ time, because the linear operation only operates on $\log(n)$ elements. Then, the \texttt{addElements} function exclusively writes ``\verb|sum += subsum|'' $\log n$ times.  This is a CREW-PRAM summation in $\log n$ time.
 	\end{enumerate}
 
 	\item Write a PRAM algorithm using $n^3$ processors to multiply two $n\times n$ matrices. Your algorithm should run in $O(\log n)$ time.
@@ -69,5 +100,4 @@ sorting=ynt
 	\end{enumerate}
 
 \end{enumerate}
-
 \end{document}
