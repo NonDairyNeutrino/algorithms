@@ -57,9 +57,9 @@ sorting=ynt
 	
         \underline{\textbf{Solution}}
 
-        Given $n$ tasks that take equal time, the most efficient way to complete all of them would be for each task to be done at the same time.  Therefore, the number of processors needed to complete $n$ tasks is also $n$, as each processor executes each tasks simultaneously.
+        Given $n$ tasks that take equal time, the most time-efficient way to complete all of them would be for each task be done on its own processor at the same time.  Therefore, the number of processors needed to complete $n$ tasks is also $n$, as each processor executes each tasks simultaneously.
 
-        The addition of two $n \times n$ matrices requires each of the $n^2$ elements to be added together, where each addition is a single task.  Therefore the addition of two $n \times n$ matrices is equivalent to a set of $n^2$ tasks.  By the above conclusion, the number of people required to execute the addition of two $n \times n$ matrices is $n^2$.
+        The addition of two $n \times n$ matrices requires each of the $2 n^2$ elements to be added together appropriately, where each addition is a single task.  Therefore the addition of two $n \times n$ matrices is equivalent to a set of $n^2$ tasks.  By the above conclusion, the number of people required to execute the addition of two $n \times n$ matrices is $n^2$. Because each addition takes the same amount of time $t_a$, and each addition is being done at the same time, the minimal total time required is also $t_a$.
 
 	\item Write a CREW PRAM algorithm for adding all n numbers in a list in $O(\log n)$ time.
 	\begin{enumerate}
