@@ -54,13 +54,13 @@ sorting=ynt
 
 \begin{enumerate}
 	\item Consider the problem of adding two $n\times n$ matrices. If it takes $t_a$ time for one person to add two numbers, how many people do we need to minimize the total time spent to get the final answer? What will be the minimum amount of time needed to find the answer, if we assume that we have enough people? Justify your answers.
-	
-        \underline{\textbf{Solution}}
+\begin{enumerate}
+        \item
 
         Given $n$ tasks that take equal time, the most time-efficient way to complete all of them would be for each task be done on its own processor at the same time.  Therefore, the number of processors needed to complete $n$ tasks is also $n$, as each processor executes each tasks simultaneously.
 
         The addition of two $n \times n$ matrices requires each of the $2 n^2$ elements to be added together appropriately, where each addition is a single task.  Therefore the addition of two $n \times n$ matrices is equivalent to a set of $n^2$ tasks.  By the above conclusion, the number of people required to execute the addition of two $n \times n$ matrices is $n^2$. Because each addition takes the same amount of time $t_a$, and each addition is being done at the same time, the minimal total time required is also $t_a$.
-
+\end{enumerate}
 	\item Write a CREW PRAM algorithm for adding all $n$ numbers in a list in $O(\log n)$ time.
 	\begin{enumerate}
 		\item The standard way of adding all $n$ numbers in a list is the naive approach of having a global $sum$ variable, then iterating through the list linearly, adding the elements of the list to $sum$ one by one. We can improve this to $O(\log n)$ time with the following algorithm:
