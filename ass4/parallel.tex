@@ -6,6 +6,7 @@
 \setstretch{1.15}
 % TYPESETTING - MATH
 \usepackage{amsmath, amsfonts}
+\usepackage{amsthm}
 \usepackage[ruled, linesnumbered, noend]{algorithm2e}
 \NewCommandCopy{\legacyunderscore}{\_}
 \renewcommand{\_}{\ifincsname_\else\legacyunderscore\fi}
@@ -61,6 +62,7 @@ sorting=ynt
 
         The addition of two $n \times n$ matrices requires each of the $2 n^2$ elements to be added together appropriately, where each addition is a single task.  Therefore the addition of two $n \times n$ matrices is equivalent to a set of $n^2$ tasks.  By the above conclusion, the number of people required to execute the addition of two $n \times n$ matrices is $n^2$. Because each addition takes the same amount of time $t_a$, and each addition is being done at the same time, the minimal total time required is also $t_a$.
 \end{enumerate}
+
 	\item Write a CREW PRAM algorithm for adding all $n$ numbers in a list in $O(\log n)$ time.
 	\begin{enumerate}
 		\item The standard way of adding all $n$ numbers in a list is the naive approach of having a global $sum$ variable, then iterating through the list linearly, adding the elements of the list to $sum$ one by one. We can improve this to $O(\log n)$ time with the following algorithm:
@@ -99,7 +101,39 @@ This will take a list of $n$ elements, and break the list up into smaller subsec
 
 	\item Write a PRAM algorithm using $n^3$ processors to multiply two $n\times n$ matrices. Your algorithm should run in $O(\log n)$ time.
 	\begin{enumerate}
-		\item With the given $n^3$ processors, we can multiply two $n x n$ matricies $M_1$ and $M_2$ using $n^2$ processors to calculate each element in an $n x n$ solution matrix $S$. for each element $[i, j]$ in matrix $S$, for some non-negative integers $i$ and $j$ in range $n$, we can use an additional n processors to calculate the product of each $M[i, j] * M_2[i, j_x]$ where $x$ goes from $0$ to $n$, and then proceed to add these numbers in $O(\log n)$ time using the function $addElements()$, defined above, and passing it the list of values in the column $M[i]$.
+		\item 
+\begin{proof}
+	We seek to prove that two $n\times n$ matrices can be multiplied together in $O(\log n)$ time using $n^3$ processors. Let $A$ and $B$ be $n\times n$ matrices. We want to calculate $C$, where $C = A\times B$ is another $n\times n$ matrix, in $O(\log n)$ time with $n^3$ processors. 
+\begin{equation}
+\begin{aligned}
+\nonumber
+\begin{bmatrix}
+A_{0, 0} 	& A_{0, 1} 	& \cdots 	& A_{0, n} \\
+A_{1, 0} 	& \ddots 	& 	 	& \vdots \\
+\vdots 	& 	 	& \ddots 	& \vdots \\
+A_{n, 0}	& \cdots 	& \cdots 	& A_{n, n}\\
+\end{bmatrix} & \times
+\begin{bmatrix}
+B_{0, 0} 	& B_{0, 1} 	& \cdots 	& B_{0, n} \\
+B_{1, 0} 	& \ddots 	& 	 	& \vdots \\
+\vdots 	& 	 	& \ddots 	& \vdots \\
+B_{n, 0}	& \cdots 	& \cdots 	& B_{n, n}\\
+\end{bmatrix} &= 
+\begin{bmatrix}
+C_{0, 0} 	& C_{0, 1} 	& \cdots 	& C_{0, n} \\
+C_{1, 0} 	& \ddots 	& 	 	& \vdots \\
+\vdots 	& 	 	& \ddots 	& \vdots \\
+C_{n, 0}	& \cdots 	& \cdots 	& C_{n, n}\\
+\end{bmatrix}
+\end{aligned}
+\end{equation}
+Let $i, j \in \mathbb{Z}$ be nonnegative integers such that $0\leq i \leq n$ and $0\leq j \leq n$. The $\left(i, j\right)^{\text{th}}$ element of matrix $C$ can be calculated by the following equation:
+\begin{equation}
+\begin{aligned}
+C_{i,j} &= \sum_{k=0}^{n} A_{i, k}\cdot B_{k, j}
+\end{aligned}
+\end{equation}
+This equation shows that the calculation for $C_{i, j}$ is a summation of $n$ elements in a ``list". Each element in the list is one element of the resultant vector from multiplying the $i^{\text{th}}$ column vector of matrix $A$ by the $j^{\text{th}}$ row vector of matrix $B$. We have shown in Problem 2 above that the $\ref{alg:addElements}$ function is capable of summing an $n$-element list of numbers with $n$ processors in $O(\log n)$ time. Thus, we can compute the $(i, j)^{\text{th}}$ element of $C$ using $n$ processors in $O(\log n)$ time. Calculating every element in $C$ requires $n^2$ calculations of $C_{i, j}$ for all $0\leq i \leq n$, $0 \leq j \leq n$. By having one processor calculate a given $C_{i, j}$ using $n$ threads in $O(\log n)$ time, as shown above, we can create $n^2$ processors to calculate each $C_{i, j}$ in parallel. Each one of the $n^2$ processors uses $n$ threads to calculate $C_{i, j}$ in $O(\log n)$ time. Therefore, we have shown that with $n^2$ processors that each use $n$ threads to perform the matrix multiplication, we can use $n^3$ processors to multiply two $n\times n$ matrices in $O(\log n)$ time using a PRAM algorithm. \end{proof}
 	\end{enumerate}
 
 \end{enumerate}
