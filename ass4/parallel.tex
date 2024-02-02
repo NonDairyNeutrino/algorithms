@@ -134,7 +134,40 @@ C_{i,j} &= \sum_{k=0}^{n} A_{i, k}\cdot B_{k, j}
 \end{aligned}
 \end{equation}
 This equation shows that the calculation for $C_{i, j}$ is a summation of $n$ elements in a ``list". Each element in the list is one element of the resultant vector from multiplying the $i^{\text{th}}$ column vector of matrix $A$ by the $j^{\text{th}}$ row vector of matrix $B$. We have shown in Problem 2 above that the $\ref{alg:addElements}$ function is capable of summing an $n$-element list of numbers with $n$ processors in $O(\log n)$ time. Thus, we can compute the $(i, j)^{\text{th}}$ element of $C$ using $n$ processors in $O(\log n)$ time. Calculating every element in $C$ requires $n^2$ calculations of $C_{i, j}$ for all $0\leq i \leq n$, $0 \leq j \leq n$. By having one processor calculate a given $C_{i, j}$ using $n$ threads in $O(\log n)$ time, as shown above, we can create $n^2$ processors to calculate each $C_{i, j}$ in parallel. Each one of the $n^2$ processors uses $n$ threads to calculate $C_{i, j}$ in $O(\log n)$ time. Therefore, we have shown that with $n^2$ processors that each use $n$ threads to perform the matrix multiplication, we can use $n^3$ processors to multiply two $n\times n$ matrices in $O(\log n)$ time using a PRAM algorithm. \end{proof}
-	\end{enumerate}
+	
+	
+        \begin{function}
+            \DontPrintSemicolon
+            \caption{matrixMul($M_1$, $M_2$)}
+            \label{alg:matrixMul}
+            \KwIn{two distinct $n \times n$ matricies of real numbers}
+            \KwOut{The resulting matrix $S$ of multiplying $M_1$ and $M_2$}
+            $S \gets [n][n]$\;
+            create $n^2$ threads, that are each assigned a unique location $(i, j)$ in $S$ and a corresponding location in $M_1$\;
+            \;
+            // generate solutions in a single, constant, action\;
+            \ForEach{$thread \in threads$}
+            {
+                $productList \gets [n]$\;
+                create a new set of $n$ threads, each assigned a unique location $x$ in $productList$ with corresponding location in $M_2(i, x)$\;\;
+
+                // generate n products in constant time\;
+                \ForEach{$thread \in newThreads$}
+                {
+                    $productList[x] \gets M_1(i,j) * M_2(i, x)$\;
+                }\;
+
+                release the threads in $newThreads$\;\;
+
+                // use $addElements()$ with the productList to get each result in $O(\log n)$ time\;
+                $S(i, j) \gets addElements(productList)$\;\;
+            
+            }
+            
+            \Return{$S$}
+        \end{function}
+    
+    \end{enumerate}
 
 \end{enumerate}
 \end{document}
