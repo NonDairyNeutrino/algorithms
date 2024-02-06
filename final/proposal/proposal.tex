@@ -86,8 +86,9 @@ The Fast Fourier Transform (FFT) is able to be done, not only efficiently, but a
 
 \section*{Parallelization}
 WHAT PARTS OF THIS PROJECT CAN BE DONE IN PARALLEL, WHAT WE WOULD USE PARALLELIZATION FOR, AND WHY WE CARE ABOUT PARALLELIZING THIS SHIT
+
 \section*{Bringing It All Together}
+We want to focus heavily on making decisions when implementing these algorithms that don't rely on arbitrary values. Explaining why we made decisions will be critical to the success of this project, because there are many typically arbitrary decisions that all greatly impact the convergence and success rates of a GA, and when solving a problem like the TSP, problem context can help us to relate our algorithm as closely as possible to the choices in the biological evolutionary process. We think that parallelizing the GA and the FFT will allow for these typically expensive algorithms to run much faster than a standard implementation, but will require careful consideration of CREW PRAM methodologies. The GA can also heavily benefit from memoization, so dynamic programming can further speed up the typically slow and computationally heavy evolutionary algorithm. A lot of research is also being done, and has been done for years, as to when to stop an evolutionary algorithm. Since the true optimal solution is rarely, if ever, known, stopping the evolutionary algorithm runs the risk of always being just 1 generation way from finding the true optimal. Using the FFT, we can use the fitness per generation landscape to project future fitness values, and weight the computational cost of continuing versus the projected increase in solution quality to determine a better, and most importantly not arbitrary, stopping condition. Again, we would like to implement a parallelized and dynamic-programming based Genetic Algorithm to solve the Vehicle Routing Problem and determine the stopping criteria through Fourier analysis of the average fitnesses over generations. 
 
 \printbibliography
-
 \end{document}
