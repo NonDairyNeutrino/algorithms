@@ -57,7 +57,25 @@ sorting=ynt
 
 \section*{Genetic Algorithm}
 A Genetic Algorithm is a type of evolutionary algorithm that attempts to follow the biological process of evolution. This algorithm works by first having an initial population generated randomly or by some smarter heuristic. The initial population then goes through typical genetic processes such as tournament or elitism selection, genetic crossover, and random mutation. Each member of the population is represented by a ``genome sequence", which encodes the some solution to an optimization problem somehow. The genetic processes operate on these genome sequences to form children. The children form the new population, and the cycle repeats, until some stopping criteria is met. As was pointed out in class, a lot of the decisions involved in using a GA to solve a problem are pretty arbitrary and disconnected from biological genetics. With this project, we want to determine the reason behind the usually arbitrary decisions when choosing a selection algorithm, a crossover algorithm, a mutation algorithm, and the hyperparameters of the model. We will analyze typical algorithms used for these processes and make decisions based off of problem context and evolutionary context to remove the arbitrary nature of these choices. Additionally, we will use the Fast Fourier Transform to determine the stopping criteria of the evolution process, as described below. 
-\section*{Fast Fourier Transform}
+
+\section*{Determining the stopping criterion with the FFT}
+
+There are many ways one can choose to stop an evolutionary algorithm.  Some common examples are
+
+\begin{itemize}
+    \item MaxGenerations: The algorithm stops when the number of generations reaches MaxGenerations.
+    
+    \item MaxTime: The algorithm stops after running for an amount of time in seconds equal to MaxTime.
+    
+    \item FitnessLimit: The algorithm stops when the value of the fitness function for the best point in the current population is less than or equal to FitnessLimit.
+    
+    \item MaxStallGenerations: The algorithm stops when the average relative change in the fitness function value over MaxStallGenerations is less than Function tolerance.
+    
+    \item MaxStallTime: The algorithm stops if there is no improvement in the objective function during an interval of time in seconds equal to MaxStallTime.
+    
+    \item FunctionTolerance: The algorithm runs until the average relative change in the fitness function value over MaxStallGenerations is less than Function tolerance.
+\end{itemize}
+
 \section*{Parallelization}
 WHAT PARTS OF THIS PROJECT CAN BE DONE IN PARALLEL, WHAT WE WOULD USE PARALLELIZATION FOR, AND WHY WE CARE ABOUT PARALLELIZING THIS SHIT
 \section*{Bringing It All Together}
