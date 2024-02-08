@@ -68,15 +68,13 @@ sorting=ynt
         Prove that n distinct point-value pairs are necessary to uniquely specify a polynomial of degree-bound n, that is, if fewer than n distinct point-value pairs are given, they fail to specify a unique polynomial of degree-bound n. (Hint: Use Theorem 30.1)
 
 \begin{proof}
-To prove that $n$ distinct point-value pairs are necessary to uniquely specify a polynomial of degree-bound $n$, we can use the concept of polynomial interpolation.
+We will show that we need $n$ distinct points to specify a unique polynomial of order $n$. In terms of polynomial interpolation, Theorem 30.1 from the Cormen textbook states that for any set $\left\{ (x_0, y_0), (x_1, y_1), \hdots,(x_{n-1}, y_{n-1})\right\}$, of $n$ points where $x_k$ are distinct, there exists a unique polynomial $P(x)$ of degree at most $n$ such that $y_k=P(x_k) \forall k=0, 1, \hdots, n-1$. We will prove that we need $n$ distinct points to specify a unique polynomial of order $n$.
 
-Polynomial interpolation states that given $n+1$ distinct points $(x_0, y_0)$, $(x_1, y_1)$, $\hdots$, $(x_n, y_n)$, where $x_i$ are distinct, there exists a unique polynomial of degree at most $n$ that passes through all these points.
+Suppose we have fewer than $n$ distinct point-value pairs, say $k$ pairs where $k < n$. Then we have $(k+1)$ distinct points $\left\{(x_0, y_0), (x_1, y_1), \hdots, (x_k, y_k)\right\}$. According to Theorem 30.1, there exists a unique polynomial of degree at most $k$ that passes through these points.
 
-Let's suppose we have fewer than $n$ distinct point-value pairs, say $k$ pairs where $k < n$. Then we have $(k+1)$ distinct points $(x_0, y_0)$, $(x_1, y_1)$, $\hdots$, $(x_k, y_k)$. According to the interpolation theorem, there exists a unique polynomial of degree at most $k$ that passes through these points.
+However, we want to specify a polynomial of degree-bound $n$. Since $k < n$, the polynomial we obtain through interpolation will have a degree less than $n$. Thus, our $k$ distinct points resulted in a polynomial of degree $k$ which does not fit in our constraints of desiring an $n$ degree polynomial from $k$ points. 
 
-However, we want to specify a polynomial of degree-bound $n$. Since $k < n$, the polynomial we obtain through interpolation might have a degree less than $n$. This means it won't fit all the constraints we want to impose on our polynomial.
-
-Therefore, if we have fewer than $n$ distinct point-value pairs, we cannot guarantee a polynomial of degree-bound $n$ uniquely, as there may be multiple polynomials that satisfy those points and have a degree less than $n$. Hence, we require at least $n$ distinct point-value pairs to uniquely specify a polynomial of degree-bound $n$.
+Therefore, if we have fewer than $n$ distinct point-value pairs, by Theorem 30.1 we cannot guarantee a polynomial of degree-bound $n$ uniquely, as there may be multiple polynomials that satisfy those points and have a degree less than $n$. Hence, we require at least $n$ distinct point-value pairs to uniquely specify a polynomial of degree-bound $n$.
 \end{proof}
 
     \section*{Applications of the FFT}
