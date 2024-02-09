@@ -129,24 +129,59 @@ However, we want to specify a polynomial of degree-bound $n$. Since $k < n$, the
 Therefore, if we have fewer than $n$ distinct point-value pairs, by Theorem 30.1 we cannot guarantee a polynomial of degree-bound $n$ uniquely, as there may be multiple polynomials that satisfy those points and have a degree less than $n$. Hence, we require at least $n$ distinct point-value pairs to uniquely specify a polynomial of degree-bound $n$.
 \end{proof}
 
-    \section*{Applications of the FFT}
+\pagebreak
 
-        \begin{itemize}
-            \item A function can be represented as a power series, and approximated with a truncated power series.  The Taylor series is a special case of this.
-            \item A function that is the product of other functions can thus be represented as a product of the truncated power series/polynomials.
-            \item Additionally, there are other similar representations as a series of orthogonal polynomials like the Hermite polynomials.
-            \item Such representations and approximations are ubiquitous in
-            \item (Wikipedia: Hermite Polynomials) The polynomials arise in:
-                \begin{itemize}
-                    \item signal processing as Hermitian wavelets for wavelet transform analysis
-                    \item probability, such as the Edgeworth series, as well as in connection with Brownian motion;
-                    \item combinatorics, as an example of an Appell sequence, obeying the umbral calculus;
-                    \item numerical analysis as Gaussian quadrature;
-                    \item physics, where they give rise to the eigenstates of the quantum harmonic oscillator; and they also occur in some cases of the heat equation;
-                    \item systems theory in connection with nonlinear operations on Gaussian noise.
-                    \item random matrix theory in Gaussian ensembles.
-                \end{itemize}
-        \end{itemize}
+    \section*{Applications of polynomial multiplication and decomposition}
+
+    It is a common occurance in physics and engineering problems to represent the solution to a linear (i.e. seperable) partial differential equation e.g. the wave equation
+
+    \begin{equation}
+        \partial_t^2 \Psi(t, \mathbf{x}) = \frac{1}{c^2} \nabla^2 \Psi(t, \mathbf{x})
+    \end{equation}
+
+    as the product of two functions, one in time and one in space as in the wave equation e.g.
+
+    \begin{equation}
+        \Psi(t, \mathbf{x}) = T(t) \psi(\mathbf{x}).
+    \end{equation}
+
+    While the conventional method is to expand the above in their Fourier representation, if the researcher would like to know the dependence of the solution on each power, it is often helpful to represent specific functions as a power series, e.g. a Taylor series, as
+
+    \begin{equation}
+        \psi(\mathbf{x}) = \sum_{k = 0}^{\infty} c_k x^k
+    \end{equation}
+
+    or, in the case of computational implementations, a truncated approximation as 
+
+    \begin{equation}
+        \psi(\mathbf{x}) = \sum_{k = 0}^{N} c_k x^k.
+    \end{equation}
+
+    Two of the most common representations are the Taylor series approximation at a point $a$
+    
+    \begin{equation}
+        \psi(x) = \sum_{k = 0}^{\infty} \frac{f^k(a)}{k!} (x - a)^k
+    \end{equation}
+
+    where $f^k$ is the $k$-th derivative of $f$, and the Hermite polynomial expansion
+
+    \begin{equation}
+        \psi(x) = \sum_{k = 0}^{\infty} c_k H_k(x)
+    \end{equation}
+
+    where the Hermite polynomials $H_k$ are defined such that $H_k = (-1)^k e^{x^2} \frac{d^k}{dx^k} e^{-x^2}$; each of these representaions can be truncated to provide a sufficient approximation as a ``finite polynomial''.
+
+    If the seperated functions $T(t)$ and $\psi(\mathbf{x})$ are approximated as a truncated power series, the solution to the partial differential equation would then be approximated as the product of the polynomials.  In the case of Hermite (orthogonal) polynomials, there are many such use cases including:
+                
+    \begin{itemize}
+        \item Signal processing as Hermitian wavelets for wavelet transform analysis
+        \item Probability, such as the Edgeworth series, as well as in connection with Brownian motion;
+        \item Combinatorics, as an example of an Appell sequence, obeying the umbral calculus;
+        \item Numerical analysis as Gaussian quadrature;
+        \item Physics, where they give rise to the eigenstates of the quantum harmonic oscillator; and they also occur in some cases of the heat equation;
+        \item Systems theory in connection with nonlinear operations on Gaussian noise.
+        \item Random matrix theory in Gaussian ensembles.
+    \end{itemize}
 
 \printbibliography
 
