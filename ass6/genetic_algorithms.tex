@@ -160,9 +160,9 @@ This example can be be modeled in the following algorithm:
 
 \begin{algorithm}[!h]
     \DontPrintSemicolon
-    \caption{Name of algorithm}
+    \caption{Execution order of the tree in generated program tree above}
     \label{alg:sp500}
-    \KwResult{some result of the function}
+    \KwResult{A metric to determine if the user should buy, hold, or sell}
 
     $IF\_1$\;
     \If {$SP500 > 0$}
@@ -202,50 +202,4 @@ This example can be be modeled in the following algorithm:
 
 Applications for these kinds of trees extend beyond financial prediction, and into machine learning. As solutions to problems are generated and evaluated against existing data sets, accurate predictions can be created based on new data. This has application for the creation of predictive algorithms that can be used to evaluate not only financial risk, but also predict medical conditions based on some set of data from a patient, consumer behaviors, weather patterns, etc.  
 
-\newpage
-\begin{algorithm}[!h]
-    \DontPrintSemicolon
-    \caption{SimulateDrive(tour)}
-    \label{alg:SimulateDrive}
-    \KwData{$tour$ is an ordered set of customer nodes, to be visited in order of first to last element}
-    \KwResult{The distance of the ``full" tour, considering all constraints}
-    \tcc{Optional visits to charging stations and the depot are only required if the vehicle cannot visit the next customer within constraints, and will be "injected" into the padded tour when necessary}
-    $paddedTour \gets \{depot\}$\;
-    $currentInventory \gets$ vehicle inventory capacity\;
-    $currentBattery \gets$ vehicle battery capacity\;
-    $fullDistance\gets 0$\;
-    $currendNode \gets depot$\;
-    Add $depot$ to $tour$ so the vehicle ends the full route at the $depot$\;
-    \While{not all customer nodes have been visited}
-    {
-        $nextDesired \gets $ next customer node in $tour$ to be visited\;
-        $demand \gets nextDesired.demand$\;
-        $route \gets \{\}$\;
-        \If{$currentInventory \geq demand$}
-        {
-            \tcc{The vehicle has enough inventory to visit the next customer}
-            $route \gets $ result of Algorithm \ref{alg:pathfind}: \texttt{Pathfind($current$, $nextDesired$)}\;
-            $currentInventory \gets currentInventory -  nextDesired.demand$\;
-        }
-        \Else
-        {
-            \tcc{The vehicle must visit the depot before servicing the next customer}
-            $route \gets $ result of Algorithm \ref{alg:pathfind}: \texttt{Pathfind($current$, \text{$depot$})}\;
-            $currentInventory \gets$ vehicle inventory capacity\;
-        }
-        \ForEach{$node\in route$}
-        {
-            \tcc{Calculate route distance and battery cost}
-            Add $node$ to $paddedTour$\;
-            $fullDistance \gets fullDistance$ + distance traveled going to $node$\;
-            $currentBattery \gets currentBattery$ - battery cost traveling to $node$\;
-            \If{$node$ is a charger}
-            {
-                $currentBattery \gets$ vehicle battery capacity\;
-            }
-        }
-        \tcc{If the vehicle visited the next desired customer, it is free to repeat this process. If the vehicle visited the depot instead, the desired customer node next iteration will be the same as the desired customer this iteration (aka the vehicle must reattempt a visit to the given customer)}
-    }
-    \Return{full tour distance}
-\end{algorithm}\textbf{}
 \end{document}
