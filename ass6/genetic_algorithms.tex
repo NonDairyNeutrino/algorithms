@@ -12,7 +12,7 @@
 \renewcommand{\_}{\ifincsname_\else\legacyunderscore\fi}
 \usepackage{listings}
 \usepackage{xcolor}
-\usepackage{algpseudocode}
+\usepackage{algorithm2e}
 
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{lightgray},   
@@ -115,22 +115,25 @@ Assume the weights in both directions on an edge are the same. Find the shortest
 $ $\\
 \underline{\textbf{Solution}}\\
 There are many ways we can approach this problem. The intuitive way to start thinking about this problem is simply start looking for edges that have lower weights. For example, we can see that the edge between $v_2$ and $v_3$ has a weight of $1$, whereas no other path starting from a vertex and ending at either $v_2$ or $v_3$ is that inexpensive. This gives us the intuition that the edge from $v_2$ to $v_3$ should at least be considered when looking for the full tour. Once we have identified this feature of the graph, an intuitive guess-and-check method of finding all tours that contain the edge $\{v_2, v_3\}$. To do this, we can employ a greedy or nearest neighbor style approach. If we arbitrarily say we want to start with the tour $\{v_3, v_2\}$, the greedy approach would be to then travel from $v_2$ to $v_4$, then from $v_4$ to $v_1$. However, once we have got to $v_1$ following this path, we can no longer continue. $v_1$ only has an edge to $v_2$, $v_3$, and $v_4$. We have not visited $v_5$, and as such we do not have a full tour. This tells us that using a greedy approach starting at $v_3$ does not yield a valid tour. Since we have a really strong intuition telling us that the edge $\{v_2, v_3\}$ should be included in our tour, let's instead start at $v_2$. The greedy approach would tell us to go to $v_3$, which is the edge we wanted. Then, we would go to $v_5$, then from $v_5$ to $v_4$, then from $v_4$ to $v_1$, then we only have to visit $v_2$ again to end our tour. This is a valid tour, and has a cost of $1 + 2 + 3 + 2 + 4 = 12$. Likewise, the greedy approach would have found the same tour starting from $v_4$ and $v_1$. The $v_1$ route is tricky, because there's a tie at the edges $\{v_4, v_2\}$ and $\{v_4, v_5\}$. In this case, the greedy algorithm would have to explore both paths. \\\\
-Another approach could be taken. If we consider all the edges in this graph, we can sort them from shortest to longest. In order of least to greatest edge cost, we have $\left\{\{v_2, v_3\}, \{v_1, v_4\}, \{v_3, v_5\}, \{v_2, v_4\}, \{v_4, v_5\}, \{v_1, v_2\}, \{v_1, v_3\}, \{v_3, v_4\}, \{v_2, v_5\}\right\}$. We can now do a simple algorithm, where we remove the edge with the highest cost if and only if removing it doesn't result no possible complete tours of the graph. For example, we can remove edge $\{v_3, v_4\}$, and there is still at least 1 valid tour that reaches each node exactly once and returns to the starting node. So, first we remove edge $\{v_2, v_5\}$, as it is the edge with the highest cost and doing so doesn't result in a graph with 0 valid tours. The next highest edge is $\{v_3, v_4\}$, so we remove that one as well. The new highest cost edge is $\{v_1, v_3\}$, and removing that doesn't make a graph with no possible tours. The next highest cost edge is $\{v_1, v_2\}$, which if we deleted it, would in fact make a graph that has no possible tours. If we remove that edge, there is only one edge travelling to $v_1$, which would break our rules of only visiting each vertex once, and ending at the starting vertex. Therefore, we can't remove $\{v_1, v_2\}$. The next highest edge is $\{v_4, v_5\}$, which just like before, if we removed that edge there would be only one route into $v_5$, so we can't remove it. Then after that, we have edge $\{v_2, v_4\}$. If we removed that edge, we would still have at least one valid tour. At this point, we have the edges $\left\{\{v_2, v_3\}, \{v_1, v_4\}, \{v_3, v_5\}, \{v_4, v_5\}, \{v_1, v_2\} \right\}$. A tour through 5 vertices requires exactly 5 edges, and we are now left with a set of 5 edges. It is clear to see that if we removed any one of these edges, we would no longer have a valid tour through the graph. We can count up the weights of all of these edges, and we will have $1 + 2 + 2 + 3 + 4 = 12$. This algorithm is a simplification of the Max-Flow, Min-Cut theorem in graph theory. Therefore we have shown that both the greedy approach starting at vertices $v_1$, $v_2$, and $v_4$ as well as the Max-Flow, Min-Cut theorem are capable of generating the same shortest tour. 
+Another approach could be taken. If we consider all the edges in this graph, we can sort them from shortest to longest. In order of least to greatest edge cost, we have $\left\{\{v_2, v_3\}, \{v_1, v_4\}, \{v_3, v_5\}, \{v_2, v_4\}, \{v_4, v_5\}, \{v_1, v_2\}, \{v_1, v_3\}, \{v_3, v_4\}, \{v_2, v_5\}\right\}$. We can now do a simple algorithm, where we remove the edge with the highest cost if and only if removing it doesn't result no possible complete tours of the graph. For example, we can remove edge $\{v_3, v_4\}$, and there is still at least 1 valid tour that reaches each node exactly once and returns to the starting node. So, first we remove edge $\{v_2, v_5\}$, as it is the edge with the highest cost and doing so doesn't result in a graph with 0 valid tours. The next highest edge is $\{v_3, v_4\}$, so we remove that one as well. The new highest cost edge is $\{v_1, v_3\}$, and removing that doesn't make a graph with no possible tours. The next highest cost edge is $\{v_1, v_2\}$, which if we deleted it, would in fact make a graph that has no possible tours. If we remove that edge, there is only one edge travelling to $v_1$, which would break our rules of only visiting each vertex once, and ending at the starting vertex. Therefore, we can't remove $\{v_1, v_2\}$. The next highest edge is $\{v_4, v_5\}$, which just like before, if we removed that edge there would be only one route into $v_5$, so we can't remove it. Then after that, we have edge $\{v_2, v_4\}$. If we removed that edge, we would still have at least one valid tour. At this point, we have the edges $\left\{\{v_2, v_3\}, \{v_1, v_4\}, \{v_3, v_5\}, \{v_4, v_5\}, \{v_1, v_2\} \right\}$. A tour through 5 vertices requires exactly 5 edges, and we are now left with a set of 5 edges. It is clear to see that if we removed any one of these edges, we would no longer have a valid tour through the graph. We can count up the weights of all of these edges, and we will have $1 + 2 + 2 + 3 + 4 = 12$. This algorithm borrows ideas from the Max-Flow, Min-Cut theorem in graph theory, which states that the maximum ``flow" passing from some source vertex to some sink vertex (in this case it can be the same vertex) is equal to the total weight of the edges in a minimum cut. The minimum cut is defined as the smallest sum of all weights of edges, which, if removed, would disconnect the source from the sink. In our case, we have done exactly that. We have found the smallest sum of all weights of edges, where if we were to remove any of the edges, we would disconnect the starting vertex from itself. Therefore we have shown that both the greedy approach starting at vertices $v_1$, $v_2$, and $v_4$ as well as the simple algorithm derived from the ideas inside the Max-Flow, Min-Cut theorem are both capable of generating the shortest tour. 
 
-\newpage
 \section*{Genetic Algorithms and Financial Trading}
 A major search area for adaptive applications is in financial sector. The hunt for an application that can use historical trade data to predict the outcome of future markets is a continuing task. One approach to solve this is the use of genetic programming trained on historical data to search for an optimal decision process. One realization of this approach involved taking historical data of financial markets (particularly the S\&P500 index from 1983 to 2004). The terminal symbols for this included \textbf{$SP500$} performance over the past 200 days:\\
 Where $SP500_{avg}$ is the average value for the past 200 days, $SP500_{today}$ is the value of the current day, and $SP_\sigma$ is the standard deviation of the value of the past 200 days:
 
 \begin{equation}
-    \Large SP500 = \frac{SP500_{today} - SP500_{avg}}{SP500_\sigma}
+    \begin{aligned}
+     SP500 = \frac{SP500_{today} - SP500_{avg}}{SP500_\sigma}
+     \end{aligned}
 \end{equation}
 
 The Moving Average Convergence/Divergence (\textbf{$MACD$}), which measures how the k-day Exponential Moving Average ($EMA$) (the weighted average of a security of the past k-days) is changing:
 Where $x$ is the security being evaluated:
 
 \begin{equation}
-    \Large MACD(x) = 12\text{-}day EMA(x) - 26\text{-}day EMA(x)
+    \begin{aligned}
+     MACD(x) = 12\text{-}day EMA(x) - 26\text{-}day EMA(x)
+     \end{aligned}
 \end{equation}
 
 The \textbf{$MACD9$} is the 9-day EMA for the $S\&P500$
@@ -138,39 +141,111 @@ The McClennan Oscilator ($MCCL$) is a consideration on whether a market is overb
 Where $diff$ is the difference of the  umber of advancing and declining securities:
 
 \begin{equation}
-    \Large MCCL = 19\text{-}day EMA(diff) - 39\text{-}day EMA(diff).
+    \begin{aligned}
+    MCCL = 19\text{-}day EMA(diff) - 39\text{-}day EMA(diff).
+    \end{aligned}
 \end{equation}
 
 Indicators with the postfix ``-lag" are the values of those indicators on the previous day. Real constants in range $[-1, 1]$ are also adjusted from generation to generation.
 
 An example of this algorithm can be seen in the figure below. In this example, $IFGT$ compares its first two child values, and if the first is greater than the second, then the third child node is executed and returned, otherwise, the second is returned. $IF$ conditionals will return the second child node if the first node is greater than zero, otherwise, the third will return.
-\begin{center}
-    \includegraphics[width=\textwidth]{gen_alg_tree.jpg}
-\end{center}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{gen_alg_tree.jpg}
+    \label{fig:space_partition}
+    \caption{5 vertex weighted graph representing an instance of the Travelling Salesperson Problem}
+\end{figure}
 
 This example can be be modeled in the following algorithm:
 
-\begin{algorithmic}
-\State $IF\_1$\\
-\If {$SP500 > 0$}
-    \State $IF\_1 \gets MACD9$
-\Else
-    \State $IF\_1 \gets MACD$
-\State $IFGT\_1$
-\If{$SP500*0.74 > IF\_1$}
-    \State $IFGT\_1 \gets MCCL + MACD9_{lag}$
-\Else\\
-    \If{$MACD9_{lag} > 0$}
-        \State $IFGT\_1 \gets MACD_{lag}$
-    \Else
-        \State $IFGT\_1 \gets MACD_{lag}$
-\If{$MCCL_{lag} > IFGT\_1$}
-    \Return $0.94 + MACD_{lag}$
-\Else
-    \Return{$SP500$}
-\end{algorithmic}
+\begin{algorithm}[!h]
+    \DontPrintSemicolon
+    \caption{Name of algorithm}
+    \label{alg:sp500}
+    \KwResult{some result of the function}
 
+    $IF\_1$\;
+    \If {$SP500 > 0$}
+    {
+        $IF\_1 \gets MACD9$\;
+    }
+    \Else
+    {
+        $IF\_1 \gets MACD$\;
+    }
+    $IFGT\_1$\;
+    \If{$SP500*0.74 > IF\_1$}
+    {
+        $IFGT\_1 \gets MCCL + MACD9_{lag}$\;
+    }
+    \Else
+    {
+        \If{$MACD9_{lag} > 0$}
+        {
+            $IFGT\_1 \gets MACD_{lag}$\;
+        }
+        \Else
+        {
+            $IFGT\_1 \gets MACD_{lag}$\;
+        }
+    }
+    \If{$MCCL_{lag} > IFGT\_1$}
+    {
+        \Return{$0.94 + MACD_{lag}$}\;
+    }
+    \Else
+    {
+        \Return{$SP500$}\;
+    }
+\end{algorithm}
+\newpage
 
 Applications for these kinds of trees extend beyond financial prediction, and into machine learning. As solutions to problems are generated and evaluated against existing data sets, accurate predictions can be created based on new data. This has application for the creation of predictive algorithms that can be used to evaluate not only financial risk, but also predict medical conditions based on some set of data from a patient, consumer behaviors, weather patterns, etc.  
 
+\newpage
+\begin{algorithm}[!h]
+    \DontPrintSemicolon
+    \caption{SimulateDrive(tour)}
+    \label{alg:SimulateDrive}
+    \KwData{$tour$ is an ordered set of customer nodes, to be visited in order of first to last element}
+    \KwResult{The distance of the ``full" tour, considering all constraints}
+    \tcc{Optional visits to charging stations and the depot are only required if the vehicle cannot visit the next customer within constraints, and will be "injected" into the padded tour when necessary}
+    $paddedTour \gets \{depot\}$\;
+    $currentInventory \gets$ vehicle inventory capacity\;
+    $currentBattery \gets$ vehicle battery capacity\;
+    $fullDistance\gets 0$\;
+    $currendNode \gets depot$\;
+    Add $depot$ to $tour$ so the vehicle ends the full route at the $depot$\;
+    \While{not all customer nodes have been visited}
+    {
+        $nextDesired \gets $ next customer node in $tour$ to be visited\;
+        $demand \gets nextDesired.demand$\;
+        $route \gets \{\}$\;
+        \If{$currentInventory \geq demand$}
+        {
+            \tcc{The vehicle has enough inventory to visit the next customer}
+            $route \gets $ result of Algorithm \ref{alg:pathfind}: \texttt{Pathfind($current$, $nextDesired$)}\;
+            $currentInventory \gets currentInventory -  nextDesired.demand$\;
+        }
+        \Else
+        {
+            \tcc{The vehicle must visit the depot before servicing the next customer}
+            $route \gets $ result of Algorithm \ref{alg:pathfind}: \texttt{Pathfind($current$, \text{$depot$})}\;
+            $currentInventory \gets$ vehicle inventory capacity\;
+        }
+        \ForEach{$node\in route$}
+        {
+            \tcc{Calculate route distance and battery cost}
+            Add $node$ to $paddedTour$\;
+            $fullDistance \gets fullDistance$ + distance traveled going to $node$\;
+            $currentBattery \gets currentBattery$ - battery cost traveling to $node$\;
+            \If{$node$ is a charger}
+            {
+                $currentBattery \gets$ vehicle battery capacity\;
+            }
+        }
+        \tcc{If the vehicle visited the next desired customer, it is free to repeat this process. If the vehicle visited the depot instead, the desired customer node next iteration will be the same as the desired customer this iteration (aka the vehicle must reattempt a visit to the given customer)}
+    }
+    \Return{full tour distance}
+\end{algorithm}\textbf{}
 \end{document}
