@@ -12,6 +12,7 @@
 \renewcommand{\_}{\ifincsname_\else\legacyunderscore\fi}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{algpseudocode}
 
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{lightgray},   
@@ -118,5 +119,58 @@ Another approach could be taken. If we consider all the edges in this graph, we 
 
 \newpage
 \section*{Genetic Algorithms and Financial Trading}
+A major search area for adaptive applications is in financial sector. The hunt for an application that can use historical trade data to predict the outcome of future markets is a continuing task. One approach to solve this is the use of genetic programming trained on historical data to search for an optimal decision process. One realization of this approach involved taking historical data of financial markets (particularly the S\&P500 index from 1983 to 2004). The terminal symbols for this included \textbf{$SP500$} performance over the past 200 days:\\
+Where $SP500_{avg}$ is the average value for the past 200 days, $SP500_{today}$ is the value of the current day, and $SP_\sigma$ is the standard deviation of the value of the past 200 days:
+
+\begin{equation}
+    \Large SP500 = \frac{SP500_{today} - SP500_{avg}}{SP500_\sigma}
+\end{equation}
+
+The Moving Average Convergence/Divergence (\textbf{$MACD$}), which measures how the k-day Exponential Moving Average ($EMA$) (the weighted average of a security of the past k-days) is changing:
+Where $x$ is the security being evaluated:
+
+\begin{equation}
+    \Large MACD(x) = 12\text{-}day EMA(x) - 26\text{-}day EMA(x)
+\end{equation}
+
+The \textbf{$MACD9$} is the 9-day EMA for the $S\&P500$
+The McClennan Oscilator ($MCCL$) is a consideration on whether a market is overbought (when $MCCL > 100$) or oversold (When $MCCL < -100$) and can be modeled by the following:\\
+Where $diff$ is the difference of the  umber of advancing and declining securities:
+
+\begin{equation}
+    \Large MCCL = 19\text{-}day EMA(diff) - 39\text{-}day EMA(diff).
+\end{equation}
+
+Indicators with the postfix ``-lag" are the values of those indicators on the previous day. Real constants in range $[-1, 1]$ are also adjusted from generation to generation.
+
+An example of this algorithm can be seen in the figure below. In this example, $IFGT$ compares its first two child values, and if the first is greater than the second, then the third child node is executed and returned, otherwise, the second is returned. $IF$ conditionals will return the second child node if the first node is greater than zero, otherwise, the third will return.
+\begin{center}
+    \includegraphics[width=\textwidth]{gen_alg_tree.jpg}
+\end{center}
+
+This example can be be modeled in the following algorithm:
+
+\begin{algorithmic}
+\State $IF\_1$\\
+\If {$SP500 > 0$}
+    \State $IF\_1 \gets MACD9$
+\Else
+    \State $IF\_1 \gets MACD$
+\State $IFGT\_1$
+\If{$SP500*0.74 > IF\_1$}
+    \State $IFGT\_1 \gets MCCL + MACD9_{lag}$
+\Else\\
+    \If{$MACD9_{lag} > 0$}
+        \State $IFGT\_1 \gets MACD_{lag}$
+    \Else
+        \State $IFGT\_1 \gets MACD_{lag}$
+\If{$MCCL_{lag} > IFGT\_1$}
+    \Return $0.94 + MACD_{lag}$
+\Else
+    \Return{$SP500$}
+\end{algorithmic}
+
+
+Applications for these kinds of trees extend beyond financial prediction, and into machine learning. As solutions to problems are generated and evaluated against existing data sets, accurate predictions can be created based on new data. This has application for the creation of predictive algorithms that can be used to evaluate not only financial risk, but also predict medical conditions based on some set of data from a patient, consumer behaviors, weather patterns, etc.  
 
 \end{document}
