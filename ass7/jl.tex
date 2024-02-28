@@ -1,0 +1,116 @@
+\documentclass{article}
+% =======PACKAGES=======
+% FORMATTING
+\usepackage[margin=0.625in]{geometry}
+\usepackage{parskip, setspace}
+\setstretch{1.15}
+% TYPESETTING - MATH
+\usepackage{amsmath, amsfonts}
+\usepackage{amsthm}
+\usepackage[ruled, linesnumbered, noend]{algorithm2e}
+\NewCommandCopy{\legacyunderscore}{\_}
+\renewcommand{\_}{\ifincsname_\else\legacyunderscore\fi}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{algorithm2e}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{lightgray},   
+    commentstyle=\color{darkgray},
+    keywordstyle=\color{red},
+    numberstyle=\color{black},
+    stringstyle=\color{violet},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+% RICH
+\usepackage{graphicx, caption}
+\usepackage{hyperref}
+% BIBLIOGRAPHY
+\usepackage[
+backend=biber,
+sorting=ynt
+]{biblatex}
+\addbibresource{bib.bib}
+
+\newcommand{\integer}{\textbf{int} }
+
+% =======TITLE=======
+\title{\vspace*{-0.625in}CS 529: Advanced Data Structures \& Algorithms \\ Assignment 7: Johnson-Lindenstrauss and Monotone Boolean Functions}
+\author{Nathan Chapman, Hunter Lawrence, Andrew Struthers}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Summary of Johnson-Lindenstrauss Lemma}
+
+The Johnson-Lindenstrauss lemma is a fundamental result in mathematics and computer science that deals with dimensionality reduction. Named after William B. Johnson and Joram Lindenstrauss, who independently proved it in the 1980s, the lemma addresses the problem of preserving the pairwise distances between points in high-dimensional Euclidean space while projecting them into lower-dimensional spaces.
+
+The lemma states that for any set of points in a high-dimensional Euclidean space, there exists a low-dimensional subspace onto which the points can be efficiently and linearly mapped, such that the pairwise distances between the points are approximately preserved. Specifically, for any $\epsilon > 0$ and any integer $n$, given a set of $m$ points in high-dimensional space (originally in $\mathbb{R}^d$), there exists a mapping to a lower-dimensional space ($\mathbb{R}^k$, where $k$ is significantly smaller than $d$) such that the distances between any pair of points are preserved up to a factor of $(1 \pm \epsilon)$.
+
+\begin{enumerate}
+    \item \textbf{Efficiency}: The lemma assures us that such a mapping can be constructed efficiently, meaning that it doesn't require excessive computational resources even for large datasets.
+    
+    \item \textbf{Applications in Machine Learning and Data Mining}: The Johnson-Lindenstrauss lemma has numerous applications in machine learning and data mining. It is particularly useful in dimensionality reduction techniques like Principal Component Analysis (PCA), t-distributed Stochastic Neighbor Embedding (t-SNE), and Locally Linear Embedding (LLE). By reducing the dimensionality of data, these techniques help in visualizing and understanding high-dimensional datasets, while still preserving the essential geometric structure and relationships between data points.
+    
+    \item \textbf{Sparse Signal Processing}: In signal processing, especially in sparse signal processing, where signals are often represented in high-dimensional spaces, the lemma finds applications in compressive sensing. It enables the reconstruction of sparse signals from a small number of linear measurements by projecting them onto a lower-dimensional space while preserving their structure.
+    
+    \item \textbf{Nearest Neighbor Search}: Another significant application is in nearest neighbor search algorithms. By reducing the dimensionality of the feature space, the computational complexity of searching for nearest neighbors is greatly reduced while maintaining the accuracy of the search.
+    
+    \item \textbf{Big Data Analysis}: With the rise of big data, the Johnson-Lindenstrauss lemma provides a powerful tool for dealing with high-dimensional datasets efficiently. It allows for the analysis of large-scale datasets without sacrificing the quality of results.
+\end{enumerate}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{dimensionality_reduction.png}
+    \caption{Visualization of Dimensionality Reduction}
+    \label{fig:dimensionality_reduction}
+\end{figure}
+\newpage
+
+In conclusion, the Johnson-Lindenstrauss lemma plays a vital role in various fields such as machine learning, data mining, signal processing, and big data analysis by providing a principled approach to reducing the dimensionality of data while preserving its inherent structure and relationships. Its wide-ranging applications make it a cornerstone in the realm of high-dimensional data analysis and processing.
+
+
+\section*{Minimal Dimension Reduction}
+
+\section*{Summary of Restoration of Monotone Boolean Functions}
+Optimal restoration of monotone Boolean functions is a significant problem in computer science, particularly in the field of Boolean function analysis and optimization. Monotone Boolean functions are functions that only increase or stay the same as their inputs increase. The optimal restoration problem involves finding the minimal set of variables to restore in a given faulty Boolean function to make it monotone again. This problem has implications in circuit design, fault tolerance, reliability analysis, and error correction in digital systems.
+
+The optimal restoration of monotone Boolean functions problem aims to identify the smallest subset of variables in a faulty Boolean function that, when restored (or fixed), render the function monotone. Given a faulty Boolean function that has become non-monotone due to some faults or errors in its variables, the objective is to determine the minimum number of variable fixes needed to restore the monotonicity of the function.
+
+Formally, for a given monotone Boolean function \( f \) with inputs \( x_1, x_2, \ldots, x_n \), and a set of faulty variables \( F \subseteq \{x_1, x_2, \ldots, x_n\} \), the goal is to find the smallest subset \( R \subseteq F \) such that the function becomes monotone when the variables in \( R \) are restored to their original values.
+
+This problem has been extensively studied in the context of fault-tolerant circuit design, where ensuring monotonicity is crucial for correct circuit behavior, especially in critical applications such as safety-critical systems and aerospace engineering.
+
+\begin{enumerate}
+    \item \textbf{Algorithmic Approaches}: Several algorithmic approaches have been proposed to solve the optimal restoration problem efficiently. These approaches often leverage properties of monotone Boolean functions and employ techniques such as dynamic programming, branch-and-bound algorithms, and greedy algorithms to identify the minimal restoration set.
+    
+    \item \textbf{Complexity Analysis}: The optimal restoration problem is known to be NP-hard, as it involves finding the smallest subset of variables that satisfies a specific property (monotonicity) in a Boolean function. As a result, heuristic and approximation algorithms are commonly used to tackle large instances of the problem.
+    
+    \item \textbf{Applications in Circuit Design}: In digital circuit design, ensuring the monotonicity of Boolean functions is crucial for maintaining reliable and predictable behavior. The optimal restoration problem helps in identifying and correcting faults in circuits to prevent non-monotonic behavior, which can lead to incorrect operation or even system failure.
+    
+    \item \textbf{Fault Tolerance and Reliability Analysis}: Monotone Boolean functions are used in modeling various aspects of fault-tolerant systems and reliability analysis. By studying the optimal restoration problem, researchers can develop techniques to enhance the fault tolerance and reliability of digital systems by efficiently identifying and correcting faults.
+    
+    \item \textbf{Error Correction in Digital Systems}: In addition to fault tolerance, the optimal restoration problem has implications for error correction in digital systems. By restoring non-monotone functions to monotone ones, errors introduced during computation or communication can be mitigated, leading to improved system performance and accuracy.
+\end{enumerate}
+
+In conclusion, the optimal restoration of monotone Boolean functions is a challenging problem with important applications in circuit design, fault tolerance, reliability analysis, and error correction in digital systems. Despite its NP-hard nature, research in this area continues to advance algorithmic techniques and explore practical applications to address the challenges posed by non-monotonic behavior in Boolean functions.
+
+
+
+\section*{Constructing Hansel Chains for Monotone Boolean Functions}
+
+
+\end{document}
