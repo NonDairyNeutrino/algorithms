@@ -85,6 +85,36 @@ In conclusion, the Johnson-Lindenstrauss lemma plays a vital role in various fie
 
 \section*{Minimal Dimension Reduction}
 
+    Estimate the minimal dimsension $k$ to preserve n-D distances of 20 arbitrary n-D points within $\pm5\%$ and $\pm50\%$ accuracy.
+
+    \underline{\textbf{Solution}}
+
+    The Johnson-Lindenstrauss lemma can be stated as 
+
+    \begin{quote}
+        For any $\epsilon \in (0,1)$ and any integer $n \geq 15(\log m) / \epsilon^2$, there exists a linear function $f: \mathbb{R}^N \to \mathbb{R}^n$ such that the restriction $f|_X$ is $(1 + \epsilon)$-bi-Lipschitz.
+    \end{quote}
+
+    We can equate this notation to our notation as
+
+    \begin{itemize}
+        \item The reduced dimension: $n = k$
+        \item The size of the collection of points: $m = 20$
+        \item The percent accuracy: $\epsilon = 5$ or $\epsilon = 50$.
+    \end{itemize}
+
+    Additionally, the minimal dimension that preserves such accuracy is when $n = \lceil 15(\log m) / \epsilon^2 \rceil$. Therefore, the minimal dimension $k$ that preserves distance with in $\pm\epsilon\%$ for a collection of 20 points is 
+
+    \begin{subequations}
+        \begin{equation*}
+            k_5 = \left\lceil \frac{15 (\log 20)}{5^2} \right\rceil = 9
+        \end{equation*}
+        \begin{equation*}
+            k_{50} = \left\lceil \frac{15 (\log 20)}{50^2} \right\rceil = 1
+        \end{equation*}    
+    \end{subequations}
+    
+
 \section*{Summary of Restoration of Monotone Boolean Functions}
 Optimal restoration of monotone Boolean functions is a significant problem in computer science, particularly in the field of Boolean function analysis and optimization. Monotone Boolean functions are functions that only increase or stay the same as their inputs increase. The optimal restoration problem involves finding the minimal set of variables to restore in a given faulty Boolean function to make it monotone again. This problem has implications in circuit design, fault tolerance, reliability analysis, and error correction in digital systems.
 
