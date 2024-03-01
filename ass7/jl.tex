@@ -80,7 +80,7 @@ The lemma states that for any set of points in a high-dimensional Euclidean spac
 \end{figure}
 \newpage
 
-In conclusion, the Johnson-Lindenstrauss lemma plays a vital role in various fields such as machine learning, data mining, signal processing, and big data analysis by providing a principled approach to reducing the dimensionality of data while preserving its inherent structure and relationships. Its wide-ranging applications make it a cornerstone in the realm of high-dimensional data analysis and processing.
+The Johnson-Lindenstrauss lemma is important in machine learning, data mining, signal processing, and big data analysis by providing a way to reduce the dimensionality of data while preserving its inherent structure and relationships.
 
 
 \section*{Minimal Dimension Reduction}
@@ -135,14 +135,19 @@ This problem has been extensively studied in the context of fault-tolerant circu
     
     \item \textbf{Error Correction in Digital Systems}: In addition to fault tolerance, the optimal restoration problem has implications for error correction in digital systems. By restoring non-monotone functions to monotone ones, errors introduced during computation or communication can be mitigated, leading to improved system performance and accuracy.
 \end{enumerate}
-
-In conclusion, the optimal restoration of monotone Boolean functions is a challenging problem with important applications in circuit design, fault tolerance, reliability analysis, and error correction in digital systems. Despite its NP-hard nature, research in this area continues to advance algorithmic techniques and explore practical applications to address the challenges posed by non-monotonic behavior in Boolean functions.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Monotone_Boolean_functions}
+    \caption{Visualization of a Boolean function}
+    \label{fig:dimensionality_reduction}
+\end{figure}
+\newpage
 
 
 
 \section*{Constructing Hansel Chains for Monotone Boolean Functions}
 
-The first step required to restore a function is to construct a sorted list of Hansel Chains using the functions $createHanselChains()$. After this is completed, it is necessary to initialize $restoredFunctionValue$ to infinity so that even large values of the boolean function $f(x)$ will be caught when checking the chains for the function value.
+The first step required to restore a function is to construct a sorted list of Hansel Chains using the functions \\$createHanselChains()$. After this is completed, it is necessary to initialize $restoredFunctionValue$ to infinity so that even large values of the boolean function $f(x)$ will be caught when checking the chains for the function value.
 
 From here, we reconstruct the function by checking for link heads that do not produce a positive result for $f(x)$, when one is found, it is iterated through until the smallest value in the chain that produces a positive value for $f(x)$ is found. This value is then converted to decimal and, if the vector's decimal value is less than $restoredFunctionValue$, is saved as the $restoredFunctionValue$. When this loop is completed, and all chain heads are checked, the value of $restoredFunctionValue$ will represent the function value for $f(x)$.
 
