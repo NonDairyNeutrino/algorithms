@@ -142,5 +142,139 @@ In conclusion, the optimal restoration of monotone Boolean functions is a challe
 
 \section*{Constructing Hansel Chains for Monotone Boolean Functions}
 
+The first step required to restore a function is to construct a sorted list of Hansel Chains using the functions $createHanselChains()$. After this is completed, it is necessary to initialize $restoredFunctionValue$ to infinity so that even large values of the boolean function $f(x)$ will be caught when checking the chains for the function value.
+
+From here, we reconstruct the function by checking for link heads that do not produce a positive result for $f(x)$, when one is found, it is iterated through until the smallest value in the chain that produces a positive value for $f(x)$ is found. This value is then converted to decimal and, if the vector's decimal value is less than $restoredFunctionValue$, is saved as the $restoredFunctionValue$. When this loop is completed, and all chain heads are checked, the value of $restoredFunctionValue$ will represent the function value for $f(x)$.
+
+\begin{algorithm}[!h]
+    \DontPrintSemicolon
+    \caption{$generateBooleanFunction(f(x))$}
+    \label{alg:sp500}
+    \KwIn{A function to re-construct a given monotone boolean function $f(x)$ and the number of dimensions for the solution vectors $dimensions$}
+    \KwOut{The function value to restore (assuming the boolean function returns true if above this value to restore)}
+    \textbf{Assumes:} The presence of some function $getDecimalValue()$ which returns the decimal value of a binary vector.
+    \BlankLine
+
+    $hanselChains \gets createHanselChains(dimensions)$\\
+
+    $restoredFunctionValue \gets \infty$\\\BlankLine
+
+    $numChains \gets hanselChains.length()$\\\BlankLine
+
+    $i \gets 0$\\
+    \While{$i < numChains$}{
+
+        // for each chain head that does not produce a positive value\\
+        \If{$!f(hanselChains[i][0])$}{
+            // find the first (lowest) index that will produce a 1\\
+            $chainLength \gets hanselChains[i].length()$\\\BlankLine
+
+            $j \gets 0$\\
+            \While{$j < hanselChains[i].length()$}{
+                \If{$f(hanselChains[i][j])$}{
+                    // if the current vector is less than the best so far, save it as $restoredFunctionValue$\\\BlankLine
+
+                    \If{$hanselChains[i][j].getDecimalValue() < restoredFunctionValue$}{
+                        $restoredFunctionValue = hanselChains[i][j].getDecimalValue()$\\
+                    }
+                    
+                }
+                $j++$\\
+            }
+            
+        }\BlankLine
+        $i++$\\
+    }
+
+    \Return{$restoredFunctionValue$}
+\end{algorithm} 
+
+
+
+
+.
+
+\begin{algorithm}[!h]
+    \DontPrintSemicolon
+    \caption{$createHanselChains(n)$}
+    \label{alg:sp500}
+    \KwIn{An integer $n$ representing the length of each boolean vector}
+    \KwOut{An unsorted two dimensional list of Hansel Chains and the vectors in each}
+    \textbf{Assumes:} The availability of some function $sort()$, which will sort chains based on the total value of their first vector in order from highest to lowest.
+    \BlankLine
+    
+    $hanselChains \gets {<0, 1>}$
+    
+    $i \gets 1$
+
+    \While{$i < n$}{
+        $numChains \gets 2^(i-1)$\\\BlankLine
+        // clone and grow all current chains\\
+        $cloneAndGrowChains(hanselChains, numChains)$\\\BlankLine
+
+        // cut and add to newly changed chains\\
+        $cutAndAddChains(hanselChains, numChains)$\\\BlankLine
+
+        $i++$\\
+    }\BlankLine
+
+    $hanselChains.sort()$
+
+    \Return{$hanselChains$}
+\end{algorithm} 
+
+
+
+\begin{algorithm}[!h]
+    \DontPrintSemicolon
+    \caption{$cloneAndGrowChains(chains, numChains)$}
+    \label{alg:sp500}
+    \KwIn{A three dimensional array of chains $chains$, and a number of currently available chains $numChains$}
+    \KwResult{Clones and grows present chains}
+    \textbf{Assumes:} The presence of some function $clone()$ that copies an array, some function $insert(index, value)$ that places a $value$ at a provided index $index$ and shifts all other values right, and some function $add(value)$ that places a $value$ at the last index of an array.
+    \BlankLine
+
+    $i \gets 0$\\
+
+    \While{$i < numChains$}{
+        // clone each chain\\
+        $newChain \gets chains[i].clone()$\\\BlankLine
+
+        // grow each chain\\
+        $newChain.insert(0, 0)$\\\BlankLine
+        $chains[i].insert(0, 1)$\\
+
+        $chains.add(newChain)$\\\BlankLine
+
+        $i++$\\
+    }
+
+    \BlankLine
+\end{algorithm} 
+
+
+
+
+\begin{algorithm}[!h]
+    \DontPrintSemicolon
+    \caption{$cutAndAddChains(chains, numChains)$}
+    \label{alg:sp500}
+    \KwIn{A three dimensional array of chains $chains$, and a number of currently available chains $numChains$}
+    \KwResult{Cuts and grows present chains}
+    \textbf{Assumes:} The presence of some function $add(value)$ that places a $value$ at the last index of an array, some function $getLastIndex()$ which gets the last index of an array, some function $deleteLastIndex()$ which removes the last index of an array.
+    \BlankLine
+
+    $i \gets 0$\\
+
+    \While{$i < numChains$}{
+        // move the last vector from the clone chain to original chain\\
+        $chains[i].add(chains[numChains+i].getLastIndex())$\\
+        $chains[numChains+i].deleteLastIndex()$\\\BlankLine
+        $i++$\\
+    }
+    \BlankLine
+    
+\end{algorithm} 
+
 
 \end{document}
