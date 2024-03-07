@@ -102,7 +102,24 @@
 
         and $b d \equiv 1 (\mod m)$.
 
-    \subsection*{Modular Congruence}
+    \subsection*{Modular Congruence}    
+
+        Two positive integers $a, b \in \mathbb{Z}^+$ are said to be ``congruent mod m'', denoted $a \equiv b (\mod m)$, if 
+
+        \begin{equation}
+            a \mod m = b \mod m
+        \end{equation}
+
+        For example
+
+        \begin{align}
+            \label{eq:isEven}      3 \mod 2 = 1 = 5 \mod 2 &\implies 3 \equiv 5 \ (\mod 2) \\
+            \label{eq:clock}       15 \mod 12 = 3 = 27 \mod 12 &\implies 15 \equiv 27 \ (\mod 12) \\
+            \label{eq:minutes}     90 \mod 60 = 30 = 210 \mod 60 &\implies 90 \equiv 210 \ (\mod 60) \\
+            \label{eq:zeroQutient} 99 \mod 100 = 99 = 1000000099 \mod 100 &\implies 99 \equiv 1000000099 \ (\mod 100)
+        \end{align}
+
+        Equation (\ref{eq:isEven}) is an example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock}) shows how modular arithmetic determines how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient}) is an example of a case where the quotient can be zero.
 
     \subsection*{Modular Multiplicative Inverse}
 
