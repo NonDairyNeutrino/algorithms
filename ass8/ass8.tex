@@ -55,7 +55,7 @@
 
 \section*{Number Theory}
 
-    3 pages of summary of number theory and proof of some statement
+    %3 pages of summary of number theory and proof of some statement
 
     \subsection*{Euclidean Division}
 
@@ -87,6 +87,20 @@
         Equation (\ref{eq:isEven}) is an example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock}) shows how modular arithmetic determines how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient}) is an example of a case where the quotient can be zero.
 
     \subsection*{Modular Exponentiation}
+
+        A particularly interesting case is the modulus of an exponentiated positive integer as
+
+        \begin{equation}
+            c = b^e \mod m
+        \end{equation}
+
+        When $e < 0$, modular exponentiation can be defined using the modular multiplicative inverse $d$
+
+        \begin{equation}
+            b^e \mod m = d^{-e} \mod m
+        \end{equation}
+
+        and $b d \equiv 1 (\mod m)$.
 
     \subsection*{Modular Congruence}
 
