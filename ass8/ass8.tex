@@ -142,8 +142,11 @@ Hence, $d = \text{gcd}(n, m)$, which completes the proof. By the definition of t
     \end{proof}
 
     \newpage
+
 \section{Number Theory - Section 11.3, 11.4, \& 11.5}
+Modular arithmetic and group theory are fundamental concepts in mathematics with applications spanning various fields, including cryptography, computer science, and number theory. This summary provides an overview of modular arithmetic, group theory, and their applications in solving modular equations, computing modular powers, and understanding modular congruence.
     \subsection{Modular Arithmetic}
+Modular arithmetic is a branch of arithmetic that deals with operations on integers modulo a fixed integer called the modulus. In modular arithmetic, two numbers are considered equivalent if their difference is divisible by the modulus. For example, \(7 \equiv 1 \pmod{6}\) because \(7 - 1 = 6\) is divisible by 6. Modular arithmetic is often denoted using the notation \(a \equiv b \pmod{n}\), where \(a\) and \(b\) are integers, and \(n\) is the modulus.
 
         If, as in Euclidean division, $a = q b + r$ we define the \emph{modulo} operation as
 
@@ -162,7 +165,12 @@ Hence, $d = \text{gcd}(n, m)$, which completes the proof. By the definition of t
 
         Equation (\ref{eq:isEven1}) is an example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock1}) shows how modular arithmetic determines how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes1}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient1}) is an example of a case where the quotient can be zero.
 
+        \subsection{Group Theory}
+
+Group theory is the branch of mathematics that studies algebraic structures known as groups. A group is a set equipped with a binary operation that satisfies certain properties, including closure, associativity, identity element, and invertibility. In the context of modular arithmetic, the set of integers modulo \(n\) forms a group under addition modulo \(n\), denoted as \((\mathbb{Z}_n, +)\).
+
         \subsection{Modular Exponentiation}
+Modular exponentiation is the process of computing \(a^b \mod{n}\) efficiently. This operation arises frequently in cryptography, particularly in public-key encryption schemes like RSA. One common method for computing modular exponentiation is the repeated squaring algorithm, which reduces the number of multiplications required to compute \(a^b \mod{n}\) by exploiting the properties of modular arithmetic and exponentiation.
 
         A particularly interesting case is the modulus of an exponentiated positive integer as
 
@@ -179,6 +187,7 @@ Hence, $d = \text{gcd}(n, m)$, which completes the proof. By the definition of t
         and $b d \equiv 1 (\mod m)$.
 
     \subsection{Modular Congruence}    
+    Modular congruence is an equivalence relation defined on integers modulo a fixed modulus \(n\). Two integers \(a\) and \(b\) are said to be congruent modulo \(n\) if their difference is divisible by \(n\). In other words, \(a\) and \(b\) have the same remainder when divided by \(n\). Modular congruence is denoted as \(a \equiv b \pmod{n}\) and is fundamental in solving modular equations and proving properties of modular arithmetic.
 
         Two positive integers $a, b \in \mathbb{Z}^+$ are said to be ``congruent mod m'', denoted $a \equiv b (\mod m)$, if 
 
@@ -196,6 +205,17 @@ Hence, $d = \text{gcd}(n, m)$, which completes the proof. By the definition of t
         \end{align}
 
         Similar to what we showed in the Modular Arithmetic section, (\ref{eq:isEven}) is another example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock}) shows how modular congruency shows us how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient}) is an example of a case where the quotient can be zero.
+
+        \subsection{Solving Modular Linear Equations}
+
+Solving modular linear equations involves finding integer solutions to equations of the form \(ax \equiv b \pmod{n}\), where \(a\), \(b\), and \(n\) are given integers, and \(x\) is the unknown variable. This problem arises in various applications, including cryptography and number theory. Techniques for solving modular linear equations include the extended Euclidean algorithm, which finds the multiplicative inverse of \(a\) modulo \(n\) when \(a\) and \(n\) are coprime.
+
+\subsection{Computing Modular Powers}
+
+Computing modular powers involves efficiently computing \(a^b \mod{n}\) for given integers \(a\), \(b\), and \(n\). This operation is essential in cryptographic algorithms like RSA and Diffie-Hellman key exchange. Efficient algorithms for computing modular powers include exponentiation by squaring, which reduces the number of multiplications required to compute \(a^b \mod{n}\) by exploiting the properties of modular arithmetic and exponentiation.
+
+\subsection{Summary}
+Modular arithmetic and group theory provide powerful tools for solving problems in various mathematical and computational domains. Understanding these concepts and their applications in modular exponentiation, modular congruence, solving modular equations, and computing modular powers is crucial for cryptography, computer science, and number theory. Further research and development in this field continue to advance the state-of-the-art in modular arithmetic and group theory, paving the way for new discoveries and applications in mathematics and beyond.
 
 \section{Theorem 11.12}
 \begin{proof}
@@ -237,6 +257,55 @@ Therefore, we have shown both directions of the statement, concluding the proof.
 \end{proof}
 
 \newpage
+
+\section{Number Theory - Section 11.6 \& 11.7}
+Prime numbers play a crucial role in various cryptographic protocols, hashing functions, and other computational tasks.
+Prime numbers, as we said above, are integers greater than 1 with no positive divisors other than 1 and themselves. Prime numbers are very significantly important in computer science. They form the building blocks of many cryptographic systems, such as RSA encryption, and are essential in various algorithms and data structures. However, as the size of prime numbers increases, the computational challenges associated with finding and verifying them also grow. There are many number theoretic algorithms tailored to address these challenges.
+
+\subsection{Finding Large Prime Numbers}
+One of the fundamental challenges in number theory and computer science is finding large prime numbers efficiently. Various algorithms tackle this problem, including the Sieve of Eratosthenes, which efficiently generates all prime numbers up to a specified limit. However, for extremely large primes, probabilistic algorithms like the Miller-Rabin primality test and deterministic algorithms like the AKS primality test are preferred. These algorithms leverage different techniques such as modular arithmetic, polynomial factorization, and probabilistic methods to identify prime numbers within a given range.
+
+\subsection{Checking Primality}
+Verifying whether a number is prime is a crucial step in many applications. While deterministic algorithms like AKS offer certainty, they can be computationally expensive for large numbers. Probabilistic algorithms like Miller-Rabin provide a probabilistic guarantee of primality, with adjustable accuracy based on the number of iterations. Other methods, such as the Lucas-Lehmer test for Mersenne primes or the elliptic curve primality proving (ECPP) algorithm, offer alternative approaches with varying trade-offs in terms of efficiency and certainty.
+
+\subsection{Runtime Efficiencies}
+The runtime efficiency of prime number algorithms is paramount in practical applications. Probabilistic algorithms often provide a balance between efficiency and accuracy, making them suitable for many real-world scenarios. Deterministic algorithms, while offering certainty, may suffer from high computational complexity, especially for extremely large numbers. Therefore, understanding the runtime complexities of different algorithms and selecting the appropriate one based on the specific requirements of the application is crucial for optimizing performance.
+
+The RSA public key cryptosystem is a widely used encryption and digital signing technique that relies on the difficulty of factoring large composite numbers into their prime factors. Named after its inventors Ron Rivest, Adi Shamir, and Leonard Adleman, RSA provides a secure method for communication and data protection over insecure networks. This summary explores how RSA works, its underlying principles, and some important theorems associated with the RSA cryptosystem.
+
+\subsection{How RSA Works}
+
+RSA encryption involves the generation of public and private key pairs, each consisting of a modulus \(n\) and an exponent \(e\) for the public key, and a modulus \(n\) and an exponent \(d\) for the private key. The security of RSA relies on the fact that it is computationally infeasible to factorize the modulus \(n\) into its prime factors without knowing the private key.
+
+The encryption process involves converting the plaintext message \(M\) into a numerical representation \(m\) and then raising it to the power of the public exponent \(e\) modulo \(n\):
+\[ C \equiv m^e \pmod{n} \]
+where \(C\) is the ciphertext.
+
+Decryption, on the other hand, involves raising the ciphertext \(C\) to the power of the private exponent \(d\) modulo \(n\):
+\[ m \equiv C^d \pmod{n} \]
+which recovers the original plaintext message \(M\).
+
+\subsection{Theorems about the RSA Cryptosystem}
+
+\subsubsection{The RSA Encryption Theorem}
+
+\textbf{Theorem:} Let \(M\) be a plaintext message, \(C\) be the corresponding ciphertext, and \(e\) and \(d\) be the public and private exponents, respectively. Then, for any plaintext message \(M\), the ciphertext \(C\) obtained through RSA encryption and the plaintext message \(M\) obtained through RSA decryption satisfy:
+\[ M \equiv (M^e)^d \pmod{n} \]
+
+\textbf{Proof:} The proof follows from the decryption process of RSA, where \(M \equiv (C^d) \pmod{n}\). Since \(C \equiv M^e \pmod{n}\), substituting \(C = M^e\) into the decryption equation yields \(M \equiv (M^e)^d \pmod{n}\).
+
+\subsubsection{The RSA Homomorphic Property}
+
+\textbf{Theorem:} RSA encryption possesses a homomorphic property, meaning that the multiplication of two ciphertexts results in the encryption of the product of the corresponding plaintexts.
+
+\textbf{Proof:} Let \(C_1\) and \(C_2\) be ciphertexts corresponding to plaintexts \(M_1\) and \(M_2\), respectively. Then, \(C_1 \cdot C_2 \equiv (M_1^e \cdot M_2^e) \pmod{n}\). By the homomorphic property of modular exponentiation, \(M_1^e \cdot M_2^e \equiv (M_1 \cdot M_2)^e \pmod{n}\), which implies that \(C_1 \cdot C_2\) is the encryption of the product of \(M_1\) and \(M_2\).
+
+
+\subsection{Summary}
+Number theoretic algorithms play a critical role in computer science applications, particularly in cryptography, data security, and optimization. The efficient generation and verification of large prime numbers are essential for ensuring the security and integrity of digital communication and computational systems. By exploring and understanding the various algorithms for finding and verifying prime numbers, we can balance the performance and reliability of our applications. The RSA public key cryptosystem offers a robust method for secure communication and data protection. By leveraging the difficulty of factoring large composite numbers, RSA ensures confidentiality and integrity in digital communication. Understanding the underlying principles and theorems associated with RSA is crucial for its proper implementation and usage in real-world applications. 
+
+Primality testing and RSA encryption are intimately connected within the realm of cryptography and number theory. The RSA public key cryptosystem relies on the difficulty of factoring large composite numbers into their prime factors for its security. Primality testing plays a crucial role in RSA, as it ensures the selection of large prime numbers for generating secure RSA keys. Efficient primality testing algorithms, such as the Miller-Rabin primality test, enable the rapid identification of large prime numbers, essential for RSA key generation. Moreover, the security of RSA encryption relies on the assumption that it is computationally infeasible to factorize the product of two large primes back into its constituent primes, a problem closely related to primality testing. Therefore, primality testing algorithms and RSA encryption are intricately intertwined, forming the foundation of secure digital communication and data protection in modern cryptography. 
+\newpage
 \section{Presburger and Halting Complexity}
 
 The Halting Problem asks if an algorithm exists which is always capable of determining whether a given program will ever terminate, provided that said algorithm exists within the program it is attempting to terminate, and the program will perform the opposite action to what the algorithm outputs. For example: if the algorithm determines that a given program will terminate, the system will never terminate, but given our assumption that the algorithm will always be right and the algorithm will perform the opposite to what the algorithm produces, it has effectively disproved itself. Because of this dilemma, the problem is non-decidable, and therefore intractable.
@@ -260,5 +329,9 @@ Another problem with a polynomial-time algorithm includes string matching. Where
 \section{Encoding Schemes}
 
     Give a problem and two encoding schemes for its input.  Express its performance using your encoding schemes.
+
+
+   
+
 
 \end{document}
