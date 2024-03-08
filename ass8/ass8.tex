@@ -35,6 +35,13 @@
 % RICH
 \usepackage{graphicx, caption}
 \usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=blue,
+    urlcolor=blue,
+}
 % BIBLIOGRAPHY
 % \usepackage[
 % backend=biber,
@@ -53,15 +60,18 @@
 
 \maketitle
 
-\section*{Number Theory}
+\tableofcontents
+\newpage
+
+\section{Number Theory - Section 11.1 \& 11.2}
 
     %3 pages of summary of number theory and proof of some statement
     Number theory is a branch of mathematics that deals with the properties and relationships of integer numbers. It encompasses various concepts and theorems that form the foundation for understanding the structure of numbers. Some of the key concepts covered in the textbook are prime and composite numbers, greatest common divisor (GCD), prime factorization, least common mulitple (LCM), and Euclid's algorithm.
 
-    \subsection*{Prime and Composite Numbers}
+    \subsection{Prime and Composite Numbers}
     A prime number $k$ is prime if and only if $k\in \mathbb{Z}, k>1$, and $k$ has no positive divisors other than 1 and $k$. Some examples of prime numbers are 2, 3, 4, 5, and 11. Composite numbers are integers greater than 1 that can be factored into smaller positive integers other than 1 and themselves. For example, 4 is composite because $4 = 2 \cdot 2$. More examples include 6, 8, 9, and 10. Prime numbers are fundamental in number theory because of the \textbf{fundamental theorem of arithmetic}, that states every natural number greater than 1 is either a prime number or can be factorized as a product of prime numbers, and this factorization is unique. This becomes very important in areas of cybersecurity and cryptography, because prime factors are used frequently when encoding and decoding messages. Composite numbers can be factored into prime numbers. For example, $10 = 5 \cdot 2$, and both 2 and 5 are prime numbers. 
 
-    \subsection*{Euclidean Division}
+    \subsection{Euclidean Division}
 
         It can be shown that for any pair of positive integers $a, b \in \mathbb{Z}^+$, there exists positive integers $q, r \in \mathbb{Z}^+$ such that 
 
@@ -71,72 +81,22 @@
 
         where $0 \leq r < b$.  $q$ is called the ``quotient'' and $r$ is called the ``remainder''.  Because this is true for any pair, the same holds for every pair of positive integers.  A well known algorithm for calculating the remainder is long division.
 
-    \subsection*{Greatest Common Divisor (GCD)}
+    \subsection{Greatest Common Divisor (GCD)}
     The \textbf{greatest common divisor (GCD)} of two integers is the largest positive integer that divides each of the integers without a remainder. An example of the GCD is GCD$(8, 12)$. The largest positive integer that divides both $8$ and $12$ is $4$, so GCD$(8, 12)=4$. The GCD can be calculated directly using various methods. One method that can calculate the GCD directly is prime factorization. Some other algorithms include Euclid's algorithm, which will be discussed later, and the binary algorithm. The GCD is used in various ares of math and computer science, such as simplifying fractions and in generating random numbers. Euclid's algorithm is one of the widely used methods for finding the GCD, and this algorithm involves repeatedly applying the division algorithm until the remainder is zero. The GCD of two numbers is invariant under multiplication by any nonzero constant.  
     
     
 
-    \subsection*{Modular Arithmetic}
+    
 
-        If, as in Euclidean division, $a = q b + r$ we define the \emph{modulo} operation as
-
-        \begin{equation}
-            a \mod b = r
-        \end{equation}
-
-        For example
-
-        \begin{align}
-            \label{eq:isEven1}      3  = 1 * 2   + 1  &\implies 3  \mod 2   = 1 \\
-            \label{eq:clock1}       15 = 1 * 12  + 3  &\implies 14 \mod 12  = 3 \\
-            \label{eq:minutes1}     90 = 1 * 60  + 30 &\implies 90 \mod 60  = 30 \\
-            \label{eq:zeroQutient1} 99 = 0 * 100 + 99 &\implies 99 \mod 100 = 99
-        \end{align}
-
-        Equation (\ref{eq:isEven1}) is an example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock1}) shows how modular arithmetic determines how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes1}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient1}) is an example of a case where the quotient can be zero.
-
-    \subsection*{Prime Factorization}
+    \subsection{Prime Factorization}
     As we mentioned earlier, every composite number an be expressed as a unique product of prime numbers, known as its prime factorization. The \textbf{fundamental theorem of arithmetic} states that every integer greater than 1 can be factored into prime numbers in exactly one way, discarding the order of the factors. For instance, the prime factorization of $38$ is $2^1\cdot 19^1$, where both $2$ and $19$ are primes. This tells us that $38$ can be represented by the product of one 2 and one 19. For prime numbers, the prime factorization is $1^1\cdot k^1$ where $k$ is the prime number. Prime factorization is used in many areas, where some of the simpler use cases are for computing the greatest common divisor and least common multiple. The prime factorization can also help simplify radicals as well as factor polynomials. Prime factorization is also a key part of many cryptographic algorithms such as RSA encryption. 
 
-    \subsection*{Modular Exponentiation}
+    
 
-        A particularly interesting case is the modulus of an exponentiated positive integer as
-
-        \begin{equation}
-            c = b^e \mod m
-        \end{equation}
-
-        When $e < 0$, modular exponentiation can be defined using the modular multiplicative inverse $d$
-
-        \begin{equation}
-            b^e \mod m = d^{-e} \mod m
-        \end{equation}
-
-        and $b d \equiv 1 (\mod m)$.
-
-    \subsection*{Modular Congruence}    
-
-        Two positive integers $a, b \in \mathbb{Z}^+$ are said to be ``congruent mod m'', denoted $a \equiv b (\mod m)$, if 
-
-        \begin{equation}
-            a \mod m = b \mod m
-        \end{equation}
-
-        For example
-
-        \begin{align}
-            \label{eq:isEven}      3 \mod 2 = 1 = 5 \mod 2 &\implies 3 \equiv 5 \ (\mod 2) \\
-            \label{eq:clock}       15 \mod 12 = 3 = 27 \mod 12 &\implies 15 \equiv 27 \ (\mod 12) \\
-            \label{eq:minutes}     90 \mod 60 = 30 = 210 \mod 60 &\implies 90 \equiv 210 \ (\mod 60) \\
-            \label{eq:zeroQutient} 99 \mod 100 = 99 = 1000000099 \mod 100 &\implies 99 \equiv 1000000099 \ (\mod 100)
-        \end{align}
-
-        Similar to what we showed in the Modular Arithmetic section, (\ref{eq:isEven}) is another example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock}) shows how modular congruency shows us how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient}) is an example of a case where the quotient can be zero.
-
-    \subsection*{Least Common Multiple (LCM)}
+    \subsection{Least Common Multiple (LCM)}
     The \textbf{least common multiple (LCM)} of two integers $a$ and $b$ is the smallest positive integer that is divisible by both $a$ and $b$. This is very similar in concept to the GCD, but here we are finding a number that both $a$ and $b$ divide, instead of a number that $a$ and $b$ are both divisible by. For example, LCM$(5, 12) = 60$. The LCM is useful in various places. Specifically, it is useful when listing multiples and performing prime factorization. We can take the highest power of each prime factor that appears in either number to find the LCM Interestingly, the LCM$(a, b)=\frac{\left|a\cdot b\right|}{\text{GCD}(a, b)}$. The LCM is used when we want to add or subtract fractions, when we want to compute the period of a repeating decimal, and in the solution of Diophantine equations. 
 
-    \subsubsection*{Diophantine Equations}
+    \subsubsection{Diophantine Equations}
     Diophantine equations are a specific type of equations in mathematics, named after the ancient mathematician Diophantus of Alexandria. These equations are usually polynomial equations with two or more unknowns and integer coefficients. One part of Diophantine equations that makes them unique above other polynomial equations is that we are only interested in integer solutions. For example, consider the equation $3x + 7y = 1$. This is a Diophantine equation because we are looking for integer values of $x$ and $y$ that satisfy the equation.
 
     
@@ -145,13 +105,13 @@
     
     The mathematical study of Diophantine problems that Diophantus initiated is now called Diophantine analysis. While individual equations present a kind of puzzle and have been considered throughout history, the formulation of general theories of Diophantine equations was an achievement of the twentieth century. One of the most famous examples of a Diophantine equation is Fermat’s Last Theorem, which states that there are no three positive integers $a$, $b$, and $c$ that satisfy the equation $a^n + b^n = c^n$ for any integer value of $n$ greater than 21. Another famous example is Pell’s equation, $x^2 - ny^2 = \pm1$, named after the mathematician John Pell. This equation is a specific type of Diophantine equation and has been studied extensively due to its appearance in various branches of mathematics. Diophantine equations have a wide range of applications in areas such as cryptography, number theory, and algebraic geometry.
 
-    \subsection*{Euclid's Algorithm}
+    \subsection{Euclid's Algorithm}
     Euclid's algorithm is a method for finding the greatest common divisor of two integers. It is based on the principle that the GCD of two numbers remains the same if the large number is replaced by the difference between the two numbers. This means that the greatest common divisor of two numbers also divides their difference. We can iteratively apply the division algorithm until the remainder becomes zero. The GCD is then found to be the last non-zero remainder. Euclid's algorithm is very efficient and allows areas of computer science and math to operate quickly. This is especially useful in cryptography when encoding or decoding large messages. 
 
-    \subsection*{Summary}
+    \subsection{Summary}
     Number theory is very important in various fields including cryptography. The concepts of prime and composite numbers, GCD and LCM, prime factorization, and Euclid's algorithm provide a good foundation for understanding properties and relationships of integer numbers. Prime numbers are very significant in cryptography, where they are used in encryption algorithms to hide messages when transmitting over public airways. Prime factorization also forms the basis for many cryptographic systems, such as RSA encryption, where the difficulty of factoring large numbers into their prime factorization allows high levels of security when encrypting messages. Euclid's algorithm is very efficient and simple to implement, especially on modern computers, and is very useful for finding modular inverses, solving linear Diophantine equations, and simplifying rationals. 
-
-\section*{Theorem 11.6}
+\newpage
+\section{Theorem 11.6}
 
     Prove that the $\gcd(n, m)$ is a product of primes that are common to $n$ and $m$, where the power of each prime in the product is the smaller of its orders in $n$ and $m$.
 
@@ -181,7 +141,103 @@ Hence, $d = \text{gcd}(n, m)$, which completes the proof. By the definition of t
 
     \end{proof}
 
-\section*{Presburger and Halting Complexity}
+    \newpage
+\section{Number Theory - Section 11.3, 11.4, \& 11.5}
+    \subsection{Modular Arithmetic}
+
+        If, as in Euclidean division, $a = q b + r$ we define the \emph{modulo} operation as
+
+        \begin{equation}
+            a \mod b = r
+        \end{equation}
+
+        For example
+
+        \begin{align}
+            \label{eq:isEven1}      3  = 1 * 2   + 1  &\implies 3  \mod 2   = 1 \\
+            \label{eq:clock1}       15 = 1 * 12  + 3  &\implies 14 \mod 12  = 3 \\
+            \label{eq:minutes1}     90 = 1 * 60  + 30 &\implies 90 \mod 60  = 30 \\
+            \label{eq:zeroQutient1} 99 = 0 * 100 + 99 &\implies 99 \mod 100 = 99
+        \end{align}
+
+        Equation (\ref{eq:isEven1}) is an example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock1}) shows how modular arithmetic determines how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes1}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient1}) is an example of a case where the quotient can be zero.
+
+        \subsection{Modular Exponentiation}
+
+        A particularly interesting case is the modulus of an exponentiated positive integer as
+
+        \begin{equation}
+            c = b^e \mod m
+        \end{equation}
+
+        When $e < 0$, modular exponentiation can be defined using the modular multiplicative inverse $d$
+
+        \begin{equation}
+            b^e \mod m = d^{-e} \mod m
+        \end{equation}
+
+        and $b d \equiv 1 (\mod m)$.
+
+    \subsection{Modular Congruence}    
+
+        Two positive integers $a, b \in \mathbb{Z}^+$ are said to be ``congruent mod m'', denoted $a \equiv b (\mod m)$, if 
+
+        \begin{equation}
+            a \mod m = b \mod m
+        \end{equation}
+
+        For example
+
+        \begin{align}
+            \label{eq:isEven}      3 \mod 2 = 1 = 5 \mod 2 &\implies 3 \equiv 5 \ (\mod 2) \\
+            \label{eq:clock}       15 \mod 12 = 3 = 27 \mod 12 &\implies 15 \equiv 27 \ (\mod 12) \\
+            \label{eq:minutes}     90 \mod 60 = 30 = 210 \mod 60 &\implies 90 \equiv 210 \ (\mod 60) \\
+            \label{eq:zeroQutient} 99 \mod 100 = 99 = 1000000099 \mod 100 &\implies 99 \equiv 1000000099 \ (\mod 100)
+        \end{align}
+
+        Similar to what we showed in the Modular Arithmetic section, (\ref{eq:isEven}) is another example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock}) shows how modular congruency shows us how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient}) is an example of a case where the quotient can be zero.
+
+\section{Theorem 11.12}
+\begin{proof}
+
+First we must define congruence modulo $n$. We say that $m$ is congruent to $k$ modulo $n$ if and only if $m$ and $k$ have the same remainder when divided by $n$, or equivalently, if $m\mod n = k \mod n$. Now, we must prove both directions of the statement.
+
+    \textbf{Direction 1:} $m$ is congruent to $k$ modulo $n$ implies $m \mod n = k \mod n$:
+
+Assume that $m$ is congruent to $k$ modulo $n$. This means that $m \equiv k \pmod{n}$. By definition, this implies that $m - k$ is divisible by $n$. Therefore, there exists an integer $q$ such that $m - k = qn$. Rearranging this equation, we get $m = qn + k$.
+
+Now, let's find the remainder when $m$ is divided by $n$. We have:
+\begin{align*}
+    m \mod n &= (qn + k) \mod n \\
+    &= (qn \mod n + k \mod n) \mod n \\
+    &= (0 + k \mod n) \mod n \\
+    &= k \mod n
+\end{align*}
+
+Hence, $m \mod n = k \mod n$, as required.
+
+\textbf{Direction 2:} $m \mod n = k \mod n$ implies $m$ is congruent to $k$ modulo $n$:
+
+Conversely, assume that $m \mod n = k \mod n$. This means that when $m$ and $k$ are divided by $n$, they have the same remainder. In other words, there exist integers $p$ and $q$ such that:
+\begin{align*}
+    m &= pn + (m \mod n) \\
+    k &= qn + (k \mod n)
+\end{align*}
+
+Since $m \mod n = k \mod n$, we can substitute this into the equations above:
+\begin{align*}
+    m &= pn + (k \mod n) \\
+    k &= qn + (k \mod n)
+\end{align*}
+
+Thus, we have $m = pn + k - qn$, which simplifies to $m = qn + k$. This means that $m - k = qn$, indicating that $m$ is congruent to $k$ modulo $n$, as required.
+
+Therefore, we have shown both directions of the statement, concluding the proof.
+
+\end{proof}
+
+\newpage
+\section{Presburger and Halting Complexity}
 
 The Halting Problem asks if an algorithm exists which is always capable of determining whether a given program will ever terminate, provided that said algorithm exists within the program it is attempting to terminate, and the program will perform the opposite action to what the algorithm outputs. For example: if the algorithm determines that a given program will terminate, the system will never terminate, but given our assumption that the algorithm will always be right and the algorithm will perform the opposite to what the algorithm produces, it has effectively disproved itself. Because of this dilemma, the problem is non-decidable, and therefore intractable.
 
@@ -193,7 +249,7 @@ Deciding the outcome of a Presburger arithmetic function is one that remains dec
 
 The solution for this trivial case is easily calculable, however as the number of variables increase, the complexity for calculating the statements value grows exponentially. Because of this the complexity for Presburger Arithmetic functions is impossible to solve in polynomial time.
 
-\section*{Polynomial-time Algorithms}
+\section{Polynomial-time Algorithms}
 
 Sorting an unsorted array is solvable using various polynomial-time algorithms. This is because the problem size of length $n$ is traverse in $n$ time, and requires traversing the graph for every index, which can be performed in $O(n^2)$ time. There do exist algorithms however which solve this problem in $O(n log n)$ time including Merge Sort and Quick Sort.
 
@@ -201,7 +257,7 @@ For the fake coin problems (which can be used for identifying anomalies in data)
 
 Another problem with a polynomial-time algorithm includes string matching. Where a length of $n$ characters exist, and the location of a given set of characters must be located. The brute force approach to this algorithm involves iteratively searching for a matching string. However, this approach can take $O(mn)$ where $m$ is the length of the search term. To avoid this, approaches have been implemented which can skip chunks of the problem space (up to the length of $m$) depending on how values are read in the line. These approaches include the Boyer-Moore algorithm and the Aho-Corasick algorithm, which produce near linear runtime.
 
-\section*{Encoding Schemes}
+\section{Encoding Schemes}
 
     Give a problem and two encoding schemes for its input.  Express its performance using your encoding schemes.
 
