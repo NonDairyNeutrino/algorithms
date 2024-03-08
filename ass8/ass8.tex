@@ -56,6 +56,10 @@
 \section*{Number Theory}
 
     %3 pages of summary of number theory and proof of some statement
+    Number theory is a branch of mathematics that deals with the properties and relationships of integer numbers. It encompasses various concepts and theorems that form the foundation for understanding the structure of numbers. Some of the key concepts covered in the textbook are prime and composite numbers, greatest common divisor (GCD), prime factorization, least common mulitple (LCM), and Euclid's algorithm.
+
+    \subsection*{Prime and Composite Numbers}
+    A prime number $k$ is prime if and only if $k\in \mathbb{Z}, k>1$, and $k$ has no positive divisors other than 1 and $k$. Some examples of prime numbers are 2, 3, 4, 5, and 11. Composite numbers are integers greater than 1 that can be factored into smaller positive integers other than 1 and themselves. For example, 4 is composite because $4 = 2 \cdot 2$. More examples include 6, 8, 9, and 10. Prime numbers are fundamental in number theory because of the \textbf{fundamental theorem of arithmetic}, that states every natural number greater than 1 is either a prime number or can be factorized as a product of prime numbers, and this factorization is unique. This becomes very important in areas of cybersecurity and cryptography, because prime factors are used frequently when encoding and decoding messages. Composite numbers can be factored into prime numbers. For example, $10 = 5 \cdot 2$, and both 2 and 5 are prime numbers. 
 
     \subsection*{Euclidean Division}
 
@@ -65,7 +69,12 @@
             a = q b + r
         \end{equation}
 
-        where $0 \leq r < b$.  $q$ is called the ``quotient'' and $r$ is called the ``remainder''.  Because this is true for any pair, the same holds for every pair of positive integers.  A well known algorithm for calculating the remaineder is long division.
+        where $0 \leq r < b$.  $q$ is called the ``quotient'' and $r$ is called the ``remainder''.  Because this is true for any pair, the same holds for every pair of positive integers.  A well known algorithm for calculating the remainder is long division.
+
+    \subsection*{Greatest Common Divisor (GCD)}
+    The \textbf{greatest common divisor (GCD)} of two integers is the largest positive integer that divides each of the integers without a remainder. An example of the GCD is GCD$(8, 12)$. The largest positive integer that divides both $8$ and $12$ is $4$, so GCD$(8, 12)=4$. The GCD can be calculated directly using various methods. One method that can calculate the GCD directly is prime factorization. Some other algorithms include Euclid's algorithm, which will be discussed later, and the binary algorithm. The GCD is used in various ares of math and computer science, such as simplifying fractions and in generating random numbers. Euclid's algorithm is one of the widely used methods for finding the GCD, and this algorithm involves repeatedly applying the division algorithm until the remainder is zero. The GCD of two numbers is invariant under multiplication by any nonzero constant.  
+    
+    
 
     \subsection*{Modular Arithmetic}
 
@@ -78,13 +87,16 @@
         For example
 
         \begin{align}
-            \label{eq:isEven}      3  = 1 * 2   + 1  &\implies 3  \mod 2   = 1 \\
-            \label{eq:clock}       15 = 1 * 12  + 3  &\implies 14 \mod 12  = 3 \\
-            \label{eq:minutes}     90 = 1 * 60  + 30 &\implies 90 \mod 60  = 30 \\
-            \label{eq:zeroQutient} 99 = 0 * 100 + 99 &\implies 99 \mod 100 = 99
+            \label{eq:isEven1}      3  = 1 * 2   + 1  &\implies 3  \mod 2   = 1 \\
+            \label{eq:clock1}       15 = 1 * 12  + 3  &\implies 14 \mod 12  = 3 \\
+            \label{eq:minutes1}     90 = 1 * 60  + 30 &\implies 90 \mod 60  = 30 \\
+            \label{eq:zeroQutient1} 99 = 0 * 100 + 99 &\implies 99 \mod 100 = 99
         \end{align}
 
-        Equation (\ref{eq:isEven}) is an example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock}) shows how modular arithmetic determines how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient}) is an example of a case where the quotient can be zero.
+        Equation (\ref{eq:isEven1}) is an example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock1}) shows how modular arithmetic determines how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes1}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient1}) is an example of a case where the quotient can be zero.
+
+    \subsection*{Prime Factorization}
+    As we mentioned earlier, every composite number an be expressed as a unique product of prime numbers, known as its prime factorization. The \textbf{fundamental theorem of arithmetic} states that every integer greater than 1 can be factored into prime numbers in exactly one way, discarding the order of the factors. For instance, the prime factorization of $38$ is $2^1\cdot 19^1$, where both $2$ and $19$ are primes. This tells us that $38$ can be represented by the product of one 2 and one 19. For prime numbers, the prime factorization is $1^1\cdot k^1$ where $k$ is the prime number. Prime factorization is used in many areas, where some of the simpler use cases are for computing the greatest common divisor and least common multiple. The prime factorization can also help simplify radicals as well as factor polynomials. Prime factorization is also a key part of many cryptographic algorithms such as RSA encryption. 
 
     \subsection*{Modular Exponentiation}
 
@@ -119,22 +131,54 @@
             \label{eq:zeroQutient} 99 \mod 100 = 99 = 1000000099 \mod 100 &\implies 99 \equiv 1000000099 \ (\mod 100)
         \end{align}
 
-        Equation (\ref{eq:isEven}) is an example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock}) shows how modular arithmetic determines how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient}) is an example of a case where the quotient can be zero.
+        Similar to what we showed in the Modular Arithmetic section, (\ref{eq:isEven}) is another example of how modular arithmetic to test if a number is even or odd.  Equation (\ref{eq:clock}) shows how modular congruency shows us how to use a 12-hour based cycle of time.  Equation (\ref{eq:minutes}) furthermore determines how to use a 60-minute based cycle of time.  Equation (\ref{eq:zeroQutient}) is an example of a case where the quotient can be zero.
 
-    \subsection*{Modular Multiplicative Inverse}
+    \subsection*{Least Common Multiple (LCM)}
+    The \textbf{least common multiple (LCM)} of two integers $a$ and $b$ is the smallest positive integer that is divisible by both $a$ and $b$. This is very similar in concept to the GCD, but here we are finding a number that both $a$ and $b$ divide, instead of a number that $a$ and $b$ are both divisible by. For example, LCM$(5, 12) = 60$. The LCM is useful in various places. Specifically, it is useful when listing multiples and performing prime factorization. We can take the highest power of each prime factor that appears in either number to find the LCM Interestingly, the LCM$(a, b)=\frac{\left|a\cdot b\right|}{\text{GCD}(a, b)}$. The LCM is used when we want to add or subtract fractions, when we want to compute the period of a repeating decimal, and in the solution of Diophantine equations. 
 
-    \subsection*{Carmichael's Totient}
+    \subsubsection*{Diophantine Equations}
+    Diophantine equations are a specific type of equations in mathematics, named after the ancient mathematician Diophantus of Alexandria. These equations are usually polynomial equations with two or more unknowns and integer coefficients. One part of Diophantine equations that makes them unique above other polynomial equations is that we are only interested in integer solutions. For example, consider the equation $3x + 7y = 1$. This is a Diophantine equation because we are looking for integer values of $x$ and $y$ that satisfy the equation.
 
-    \subsection*{Extended Euclidean Algorithm}
+    
+    Diophantine equations can be linear or exponential. A linear Diophantine equation equates to a constant the sum of two or more monomials, each of degree one. An exponential Diophantine equation is one in which unknowns can appear in exponents. Diophantine problems often have fewer equations than unknowns and involve finding integers that solve simultaneously all equations. Because these equations and systems of equations usually algebraic curves, surfaces, and sets, the study focused on this type of problem inside of algebraic geometry is called Diophantine geometry. 
 
-    \subsection*{Primality Testing}
+    
+    The mathematical study of Diophantine problems that Diophantus initiated is now called Diophantine analysis. While individual equations present a kind of puzzle and have been considered throughout history, the formulation of general theories of Diophantine equations was an achievement of the twentieth century. One of the most famous examples of a Diophantine equation is Fermat’s Last Theorem, which states that there are no three positive integers $a$, $b$, and $c$ that satisfy the equation $a^n + b^n = c^n$ for any integer value of $n$ greater than 21. Another famous example is Pell’s equation, $x^2 - ny^2 = \pm1$, named after the mathematician John Pell. This equation is a specific type of Diophantine equation and has been studied extensively due to its appearance in various branches of mathematics. Diophantine equations have a wide range of applications in areas such as cryptography, number theory, and algebraic geometry.
+
+    \subsection*{Euclid's Algorithm}
+    Euclid's algorithm is a method for finding the greatest common divisor of two integers. It is based on the principle that the GCD of two numbers remains the same if the large number is replaced by the difference between the two numbers. This means that the greatest common divisor of two numbers also divides their difference. We can iteratively apply the division algorithm until the remainder becomes zero. The GCD is then found to be the last non-zero remainder. Euclid's algorithm is very efficient and allows areas of computer science and math to operate quickly. This is especially useful in cryptography when encoding or decoding large messages. 
+
+    \subsection*{Summary}
+    Number theory is very important in various fields including cryptography. The concepts of prime and composite numbers, GCD and LCM, prime factorization, and Euclid's algorithm provide a good foundation for understanding properties and relationships of integer numbers. Prime numbers are very significant in cryptography, where they are used in encryption algorithms to hide messages when transmitting over public airways. Prime factorization also forms the basis for many cryptographic systems, such as RSA encryption, where the difficulty of factoring large numbers into their prime factorization allows high levels of security when encrypting messages. Euclid's algorithm is very efficient and simple to implement, especially on modern computers, and is very useful for finding modular inverses, solving linear Diophantine equations, and simplifying rationals. 
 
 \section*{Theorem 11.6}
 
     Prove that the $\gcd(n, m)$ is a product of primes that are common to $n$ and $m$, where the power of each prime in the product is the smaller of its orders in $n$ and $m$.
 
     \begin{proof}
-        
+        The \textbf{Fundamental Theorem of Arithmetic} states that every integer greater than 1 is either a prime number itself or can be represented as a product of prime numbers, and that this representation is unique up to the order of the factors. By the FToA, let the prime factorization of $n$ be denoted by:
+        \[n=p_{1}^{a_1}\cdot p_{2}^{a_2}\cdot \hdots \cdot p_{k}^{a_k}\]
+        and the prime factorization of $m$ be denoted by:
+        \[m=p_{1}^{b_1}\cdot p_{2}^{b_2}\cdot \hdots \cdot p_{k}^{b_k}\]
+        where $p_i$ are the prime factors and $a_i$ and $b_i$ are their respective powers in $n$ and $m$. Notice that if a prime $p_i$ does not divide $n$ or $m$, we can say that its power is $0$ in $n$ or $m$. The \textbf{greatest common divisor} of $n$ and $m$ is the product of the primes that are common to $n$ and $m$, where the power of each prime in the product is the smaller of its orders in $n$ and $m$. Therefore, we can write:
+        Let $d$ be the greatest common divisor (GCD) of $n$ and $m$. Then, $d$ is given by:
+\[
+d = p_1^{\min(a_1, b_1)} \cdot p_2^{\min(a_2, b_2)} \cdot \ldots \cdot p_k^{\min(a_k, b_k)}
+\]
+
+We need to show that $d = \text{gcd}(n, m)$.
+
+First, we need to show that $d$ is a common divisor of both $n$ and $m$. By construction, the exponents of each prime in the factorization of $d$ are at most the exponents in the factorizations of $n$ and $m$. Therefore, each term in the expression of $d$ divides the corresponding term in the factorizations of both $n$ and $m$. Hence, $d$ is a common divisor of both $n$ and $m$.
+
+Next, we need to show that $d$ is the greatest common divisor of $n$ and $m$. Suppose there exists another common divisor $c$ of $n$ and $m$. Then, $c$ can be expressed as:
+\[
+c = p_1^{x_1} \cdot p_2^{x_2} \cdot \ldots \cdot p_k^{x_k}
+\]
+
+where $x_1 \leq a_1$, $x_1 \leq b_1$, $x_2 \leq a_2$, $x_2 \leq b_2$, and so on. Since $\min(a_i, b_i) \leq a_i$ and $\min(a_i, b_i) \leq b_i$ for all $i$, it follows that $x_i \geq \min(a_i, b_i)$ for all $i$. Therefore, $c$ is a multiple of $d$, and thus $d$ is greater than or equal to any common divisor of $n$ and $m$.
+
+Hence, $d = \text{gcd}(n, m)$, which completes the proof. By the definition of the GCD and by using the FToA, the GCD of $n$ and $m$ is a product of primes that are common to both $n$ and $m$, with the power of each prime in the product being the smaller of its orders in $n$ and $m$.
+
     \end{proof}
 
 \section*{Presburger and Halting Complexity}
