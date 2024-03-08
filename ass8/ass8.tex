@@ -183,9 +183,23 @@ Hence, $d = \text{gcd}(n, m)$, which completes the proof. By the definition of t
 
 \section*{Presburger and Halting Complexity}
 
+The Halting Problem asks if an algorithm exists which is always capable of determining whether a given program will ever terminate, provided that said algorithm exists within the program it is attempting to terminate, and the program will perform the opposite action to what the algorithm outputs. For example: if the algorithm determines that a given program will terminate, the system will never terminate, but given our assumption that the algorithm will always be right and the algorithm will perform the opposite to what the algorithm produces, it has effectively disproved itself. Because of this dilemma, the problem is non-decidable, and therefore intractable.
+
+Deciding the outcome of a Presburger arithmetic function is one that remains decidable, yet has been proven impossible to solve in polynomial time. Presburger arithmetic seeks to determine outcome of a statement consisting of some series of inequalities with various undefined variables. Because each of these variables must be evaluated before making a decision, the evaluation of each variable increases the runtime by a factor equal to the number of variables. For example, in the following trivial statement, variables $x$, $y$, and $z$ must each be evaluated in order to solve the inequality.
+
+\begin{equation}
+    2x+4y-3z < 7 \wedge 3x-y+2z < -4
+\end{equation}
+
+The solution for this trivial case is easily calculable, however as the number of variables increase, the complexity for calculating the statements value grows exponentially. Because of this the complexity for Presburger Arithmetic functions is impossible to solve in polynomial time.
+
 \section*{Polynomial-time Algorithms}
 
-    List 3 and justify
+Sorting an unsorted array is solvable using various polynomial-time algorithms. This is because the problem size of length $n$ is traverse in $n$ time, and requires traversing the graph for every index, which can be performed in $O(n^2)$ time. There do exist algorithms however which solve this problem in $O(n log n)$ time including Merge Sort and Quick Sort.
+
+For the fake coin problems (which can be used for identifying anomalies in data) involves the identification of a single coin which produces a heavier weight in a pile of $n-1$ coins which all share the same weight. With the ability to compare two separate piles of coins, this problem can be solved in $O(log n)$ time, as the coins are split into equal piles, and weighed, and then splitting the heavier pile in two and weighing until only one coin remains as the fake coin. Because the search space is being cut in half after every weigh, the problem size is decreasing by half, therefore representing a logarithmic solution.
+
+Another problem with a polynomial-time algorithm includes string matching. Where a length of $n$ characters exist, and the location of a given set of characters must be located. The brute force approach to this algorithm involves iteratively searching for a matching string. However, this approach can take $O(mn)$ where $m$ is the length of the search term. To avoid this, approaches have been implemented which can skip chunks of the problem space (up to the length of $m$) depending on how values are read in the line. These approaches include the Boyer-Moore algorithm and the Aho-Corasick algorithm, which produce near linear runtime.
 
 \section*{Encoding Schemes}
 
