@@ -325,13 +325,54 @@ Sorting an unsorted array is solvable using various polynomial-time algorithms. 
 For the fake coin problems (which can be used for identifying anomalies in data) involves the identification of a single coin which produces a heavier weight in a pile of $n-1$ coins which all share the same weight. With the ability to compare two separate piles of coins, this problem can be solved in $O(log n)$ time, as the coins are split into equal piles, and weighed, and then splitting the heavier pile in two and weighing until only one coin remains as the fake coin. Because the search space is being cut in half after every weigh, the problem size is decreasing by half, therefore representing a logarithmic solution.
 
 Another problem with a polynomial-time algorithm includes string matching. Where a length of $n$ characters exist, and the location of a given set of characters must be located. The brute force approach to this algorithm involves iteratively searching for a matching string. However, this approach can take $O(mn)$ where $m$ is the length of the search term. To avoid this, approaches have been implemented which can skip chunks of the problem space (up to the length of $m$) depending on how values are read in the line. These approaches include the Boyer-Moore algorithm and the Aho-Corasick algorithm, which produce near linear runtime.
-
 \section{Encoding Schemes}
+\subsection{Problem: Traveling Salesman Problem (TSP)}
 
-    Give a problem and two encoding schemes for its input.  Express its performance using your encoding schemes.
+The Traveling Salesman Problem is an NP-complete problem in which the goal is to find the shortest possible route that visits each city exactly once and returns to the origin city.
 
+\subsection{Encoding Schemes}
 
-   
+\subsubsection{Encoding Scheme 1: Adjacency Matrix}
+
+In this encoding scheme, we represent the input as an $n \times n$ matrix, where $n$ is the number of cities. Each element $(i, j)$ in the matrix represents the distance between city $i$ and city $j$.
+
+\subsubsection{Encoding Scheme 2: Edge List}
+
+In this encoding scheme, we represent the input as a list of edges, where each edge is represented by a tuple $(\text{city}_1, \text{city}_2, \text{distance})$, indicating the connection between city $\text{city}_1$ and city $\text{city}_2$ with the given distance.
+
+\subsection{Performance Analysis}
+
+\subsubsection{Performance using Encoding Scheme 1 (Adjacency Matrix)}
+
+\begin{itemize}
+    \item \textbf{Space Complexity}: $O(n^2)$ to store the entire adjacency matrix, where $n$ is the number of cities.
+    \item \textbf{Time Complexity}:
+    \begin{itemize}
+        \item Computing the distance between two cities: $O(1)$ (constant time lookup in the matrix).
+        \item Checking the existence of an edge: $O(1)$.
+        \item Total time complexity for distance computations and edge checks: $O(n^2)$.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Performance using Encoding Scheme 2 (Edge List)}
+
+\begin{itemize}
+    \item \textbf{Space Complexity}: $O(n^2)$ to store the list of edges, where $n$ is the number of cities in the worst-case scenario where every pair of cities is connected.
+    \item \textbf{Time Complexity}:
+    \begin{itemize}
+        \item Computing the distance between two cities: $O(n)$ in the worst case (linear time search through the list of edges).
+        \item Checking the existence of an edge: $O(n)$ in the worst case.
+        \item Total time complexity for distance computations and edge checks: $O(n^2)$.
+    \end{itemize}
+\end{itemize}
+\subsection{Summary}
+We considered two encoding schemes for representing the input of the Traveling Salesman Problem: Adjacency Matrix and Edge List. Both encoding schemes have their advantages and disadvantages in terms of space and time complexity.
+
+The Adjacency Matrix encoding scheme offers constant time lookup for computing distances between cities and checking the existence of edges, resulting in a time complexity of $O(n^2)$. However, its space complexity of $O(n^2)$ may become prohibitive for large instances of the TSP.
+
+On the other hand, the Edge List encoding scheme has the same space complexity as the Adjacency Matrix but may require slightly higher time complexity ($O(n^2)$) for distance computations and edge checks due to linear time searches through the list of edges. Nonetheless, it offers flexibility and can be more memory-efficient for sparse graphs.
+
+Therefore, the choice between these encoding schemes depends on the specific requirements of the problem instance and the algorithms employed for solving it. Both encoding schemes provide viable approaches for tackling the Traveling Salesman Problem and other related optimization problems.
 
 
 \end{document}
